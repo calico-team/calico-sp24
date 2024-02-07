@@ -6,6 +6,10 @@
 session
 desktop.ini
 
+# For Nacho
+.vscode
+.idea
+
 # VisualStudioCode.gitignore
 .vscode/*
 !.vscode/settings.json
