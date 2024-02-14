@@ -22,12 +22,9 @@ def solve(N: int, S: list[str], E: list[str]):
                 ans = False
 
     if ans:
-        print("YES")
+        return "YES"
     else:
-        print("banned")
-
-    return
-
+        return "banned"
 
 def main():
     T = int(input())
@@ -35,7 +32,7 @@ def main():
         N = int(input())
         S = [x for x in input()]
         E = [x for x in input()]
-        solve(N, S, E)
+        print(solve(N, S, E))
 
 
 if __name__ == '__main__':

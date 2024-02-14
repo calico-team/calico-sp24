@@ -12,7 +12,7 @@ Everything else will be handled by the make_data function in calico_lib.py.
 You can also run this file with the -v argument to see debug prints.
 """
 
-max_N = 1e9
+max_N = 100
 
 import os
 import random
@@ -47,6 +47,11 @@ def make_sample_tests():
     See calico_lib.make_sample_test for more info.
     """
     main_sample_cases = [
+        TestCase(6, "###--#", "-#----"),
+        TestCase(7, "-####-#", "-####--"),
+        TestCase(4, "----", "----"),
+        TestCase(12, "#----##-#---", "#-----##----"),
+        TestCase(20, "###-#---###-#####--#", "#-#-----#---#--##---"),
     ]
     make_sample_test(main_sample_cases, 'main')
 
@@ -64,6 +69,7 @@ def make_secret_tests():
     def random_cases(n, t):
         def one_case():
             start = ""
+            end = ""
             while len(start) <= n:
                 spacing = min(np.random.poisson(1), 4)
                 start += "-" * spacing + "#"
@@ -92,14 +98,14 @@ def make_test_in(cases, file):
     
     print(T, file=file)
     for case in cases:
-        print(f'{case.N} {case.course_start} {case.course_end}', file=file)
+        print(f'{case.N}\n{case.course_start}\n{case.course_end}', file=file)
         
         if 'main' in file_name:
             assert 1 <= case.N <= max_N
         else:
             raise 'bruh wtf u named ur test file wrong'
         
-        print(*case.sequences, file=file)
+        # print(*case.sequences, file=file)
         
     
     if 'bonus_2' in file_name:
@@ -114,9 +120,9 @@ def make_test_out(cases, file):
     The easiest way to do this is to import a python reference solution to the
     problem and print the output of that.
     """
-    from submissions.accepted.loserq import solve
+    from submissions.accepted.tntrun_ac import solve
     for case in cases:
-        ans = solve(case.N, case.K, case.probs, case.sequences)
+        ans = solve(case.N, case.course_start, case.course_end)
         print(ans, file=file)
         
 
