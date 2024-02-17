@@ -12,6 +12,28 @@ using namespace std;
  * E: the list of ending blocks
  */
 void solve(int N, vector<char> S, vector<char> E) {
+    bool ans = true;
+    int cnt = 0;
+    for (int i = 0; i < N; i++) {
+        if (S[i] == '-' && E[i] == '#') {
+            ans = false;
+        }
+        if (S[i] == '#' && E[i] == '-') {
+            cnt = 0;
+        }
+        if (S[i] == E[i]) {
+            cnt += 1;
+            if (cnt > 4) {
+                ans = false;
+            }
+        }
+    }
+
+    if (ans) {
+        cout << "YES" << '\n';
+    } else {
+        cout << "banned" << '\n';
+    }
     return;
 }
 
