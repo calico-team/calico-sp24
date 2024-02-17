@@ -1,18 +1,20 @@
-def solve(A: str):
+def solve(A: int, B: int) -> int:
     """
-    Return the CALICOncatenation of A.
-
-    A: a string of representing a single word
+    Return the sum of A and B.
+    
+    A: a non-negative integer
+    B: another non-negative integer
     """
-    print(A);
+    # YOUR CODE HERE
     return 0
+
 
 def main():
     T = int(input())
     for _ in range(T):
-        A = input()
-        print(solve(A))
-
+        temp = input().split()
+        A, B = int(temp[0]), int(temp[1])
+        print(solve(A, B))
 
 if __name__ == '__main__':
     main()
