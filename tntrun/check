@@ -16,6 +16,12 @@ then
   output=$(java -cp ./bin "$1" < "$2.in" | diff -Z "$2.ans" -)
   rm -rf ./bin
   found=true
+elif [[ "$1" == *cpp ]] # cpp
+then
+  g++ -O2 "$1" -o bin
+  output=$(./bin < "$2.in" | diff -Z "$2.ans" -)
+  rm bin
+  found=true
 else
   echo "Unrecognized solution format: $1";
 fi
