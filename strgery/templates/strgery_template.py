@@ -1,18 +1,18 @@
 # TODO!!!!
-def solve(A: str):
+# TODO: change the variable name to fit problem
+def solve(A: str, B: str):
     """
-    Return the CALICOncatenation of A.
+    =========== TODO Description ========
 
-    A: a string of representing a single word
+    A: TODO describe io
     """
-    print(A);
     return 0
 
 def main():
     T = int(input())
     for _ in range(T):
-        A = input()
-        print(solve(A))
+        A, B = input().split()
+        print(solve(A, B))
 
 
 if __name__ == '__main__':

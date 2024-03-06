@@ -66,6 +66,8 @@ def make_secret_tests():
     
     TODO Write sample tests. Consider creating edge cases and large randomized
     tests.
+
+    TODO: Probably breakable by matching 100 chars
     """
 
     def rand_str(n, c_cnt=26):
@@ -79,14 +81,19 @@ def make_secret_tests():
         assert n <= l
         pos = random.randint(0, l-n);
         return s[pos:pos+n]
+
+    def generate_cut(s, n): # This probably generates s2 from 2 cuts of s1
+        splitPos = random.randint(n-len(s), min(n-1, len(s)))
+        s2 = get_random_substr(s, splitPos)+get_random_substr(s, n-splitPos)
+        return s2
+
     def make_random_bad(len1, len2):
         s1 = rand_str(len1)
         s2 = rand_str(len2)
         return TestCase(s1, s2)
     def make_random_good(len1, len2):
         s1 = rand_str(len1)
-        splitPos = random.randint(len2-len1, min(len2-1, len1))
-        s2 = get_random_substr(s1, splitPos)+get_random_substr(s1, len2-splitPos)
+        s2 = generate_cut(s1, len2)
         return TestCase(s1, s2)
 
     def make_random_case(len1, len2):
@@ -113,7 +120,7 @@ def make_test_in(cases: list[TestCase], file):
     T = len(cases)
     print(T, file=file)
     for case in cases:
-        print(f'{case.A} {case.B}', file=file)
+        print(f'{case.A}\n{case.B}', file=file)
 
 
 def make_test_out(cases, file):
