@@ -3,13 +3,10 @@
 using namespace std;
 
 /**
- * Return the sum of A and B.
- * 
- * A: a non-negative integer
- * B: another non-negative integer
+ * Implements addition with CPP's fixed precision int. This passes the main test
+ * set only.
  */
-int16_t solve(int A, string C) {
-    // YOUR CODE HERE
+int solve(int A, int B, string C) {
     return 0;
 }
 
@@ -17,10 +14,10 @@ int main() {
     int T;
     cin >> T;
     for (int i = 0; i < T; i++) {
-        int A;
-        cin >> A;
-        string B;
-        cin >> B;
-        cout << solve(A, B) << '\n';
+        int A, B;
+        cin >> A >> B;
+        string C;
+        cin >> C;
+        cout << solve(A, B, C) << '\n';
     }
 }
