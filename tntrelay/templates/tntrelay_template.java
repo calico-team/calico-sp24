@@ -7,7 +7,7 @@ class Solution {
      * A: a non-negative integer
      * B: another non-negative integer
      */
-    static int solve(int A, int B) {
+    static int solve(int A, String B) {
         // YOUR CODE HERE
         return -1;
     }
@@ -19,7 +19,9 @@ class Solution {
         int T = Integer.parseInt(in.readLine());
         for (int i = 0; i < T; i++) {
             String[] temp = in.readLine().split(" ");
-            int A = Integer.parseInt(temp[0]), B = Integer.parseInt(temp[1]);
+            int A = Integer.parseInt(temp[0]);
+            String[] temp1 = in.readLine().split(" ");
+            String B = temp1[0];
             out.println(solve(A, B));
         }
         out.flush();

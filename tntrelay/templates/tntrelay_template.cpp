@@ -8,17 +8,19 @@ using namespace std;
  * A: a non-negative integer
  * B: another non-negative integer
  */
-int solve(int A, int B) {
+int16_t solve(int A, string C) {
     // YOUR CODE HERE
-    return -1;
+    return 0;
 }
 
 int main() {
     int T;
     cin >> T;
     for (int i = 0; i < T; i++) {
-        int A, B;
-        cin >> A >> B;
+        int A;
+        cin >> A;
+        string B;
+        cin >> B;
         cout << solve(A, B) << '\n';
     }
 }
