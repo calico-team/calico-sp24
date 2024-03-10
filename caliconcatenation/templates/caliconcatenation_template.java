@@ -6,9 +6,8 @@ class Solution {
      *
      * A: a string of representing a single word 
      */
-    static int solve(String A) {
-        System.out.println(A);
-        return -1;
+    static String solve(String A) {
+        return A;
     }
 
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

@@ -1,4 +1,4 @@
-def solve(A: str):
+def solve(A: str) -> str:
     """
     Return the CALICOncatenation of A.
 

@@ -1,4 +1,4 @@
-def solve(A: str):
+def solve(A: str) -> str:
     """
     Return the CALICOncatenation of A.
 
@@ -19,8 +19,6 @@ def solve(A: str):
         print(A[0:i], calico_lower[6-i:])
         if A[0:i] == calico_lower[6-i:]:
             matching_count = i
-
-    print(matching_count)
             
     return calico + A[matching_count:]
 
