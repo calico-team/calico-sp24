@@ -4,8 +4,25 @@ def solve(A: str):
 
     A: a string of representing a single word
     """
-    print(A);
-    return 0
+
+    '''
+    Greedily search through the first 6 characters of the word to find the 
+    first non-matching character.
+    '''
+    
+    calico = "CALICO"
+    calico_lower = "calico"
+    matching_count = 0
+    
+
+    for i in range(7):
+        print(A[0:i], calico_lower[6-i:])
+        if A[0:i] == calico_lower[6-i:]:
+            matching_count = i
+
+    print(matching_count)
+            
+    return calico + A[matching_count:]
 
 def main():
     T = int(input())
