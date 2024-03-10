@@ -2,23 +2,25 @@ import java.io.*;
 
 class Solution {
     /**
-     * Implements addition with Java's fixed precision int. This passes the main
-     * test set only.
+     * Return the CALICOncatenation of A.
+     *
+     * A: a string of representing a single word 
      */
-    static int solve(int A, int B) {
-        return A + B;
+    static int solve(String A) {
+        System.out.println(A);
+        return -1;
     }
-    
+
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static PrintWriter out = new PrintWriter(System.out);
 
     public static void main(String[] args) throws IOException {
         int T = Integer.parseInt(in.readLine());
         for (int i = 0; i < T; i++) {
-            String[] temp = in.readLine().split(" ");
-            int A = Integer.parseInt(temp[0]), B = Integer.parseInt(temp[1]);
-            out.println(solve(A, B));
+            String A = in.readLine();
+            out.println(solve(A));
         }
         out.flush();
     }
 }
+
