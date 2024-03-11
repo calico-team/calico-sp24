@@ -20,7 +20,7 @@ from calico_lib import make_sample_test, make_secret_test, make_data
 Seed for the random number generator. We need this so randomized tests will
 generate the same thing every time. Seeds can be integers or strings.
 """
-SEED = 'TODO Change this to something different, long, and arbitrary.'
+SEED = 'ongaongaongaongaongaongaongaongaongaongaongaongaongaongaongaongaongaonga.'
 
 
 class TestCase:
@@ -72,8 +72,7 @@ def make_secret_tests():
     """
     def make_random_case(max_digits):
 
-
-        with open('cali.json', 'r') as file:
+        with open('caliconcatenation/cali.json', 'r') as file:
             data = json.load(file)
 
         result = {}
