@@ -13,6 +13,7 @@ You can also run this file with the -v argument to see debug prints.
 """
 
 import random
+import json
 from calico_lib import make_sample_test, make_secret_test, make_data
 
 """
@@ -31,10 +32,9 @@ class TestCase:
     """
 
 
-    def __init__(self, A, B):
+    def __init__(self, A):
         self.A = A
-        self.B = B
-
+ 
 
 def make_sample_tests():
     """
@@ -49,18 +49,15 @@ def make_sample_tests():
     identify edge cases.
     """
     main_sample_cases = [
-        TestCase(7, 9),
-        TestCase(420, 69),
-        TestCase(3, 0),
+        TestCase("computers"),
+        TestCase("licorice"),
+        TestCase("comprehensible"),
+        TestCase("cosmopolitan"),
+        TestCase("calico"),
+        TestCase("corvettes"),
     ]
     make_sample_test(main_sample_cases, 'main')
     
-    bonus_sample_cases = [
-        TestCase(123456789, 987654321),
-        TestCase(3141592653589793238462643, 3832795028841971693993751),
-    ]
-    make_sample_test(bonus_sample_cases, 'bonus')
-
 
 def make_secret_tests():
     """
@@ -74,37 +71,32 @@ def make_secret_tests():
     tests.
     """
     def make_random_case(max_digits):
-        def random_n_digit_number(n):
-            return random.randint(10 ** (n - 1), (10 ** n) - 1) if n != 0 else 0
-        A_digits = random.randint(0, max_digits)
-        B_digits = random.randint(0, max_digits)
-        A, B = random_n_digit_number(A_digits), random_n_digit_number(B_digits)
-        return TestCase(A, B)
+
+
+        with open('cali.json', 'r') as file:
+            data = json.load(file)
+
+        result = {}
+
+        for category, entries in data.items():
+            result[category] = entries[:50]
+
+        flat = [item for sublist in result.values() for item in sublist] 
+        A = random.choice(flat)
+        return TestCase(A)
     
-    main_edge_cases = [
-        TestCase(0, 0),
-        TestCase(1, 0),
-        TestCase(0, 1),
-        TestCase(10 ** 9, 0),
-        TestCase(0, 10 ** 9),
-        TestCase(10 ** 9, 10 ** 9),
-    ]
-    make_secret_test(main_edge_cases, 'main_edge')
     
     for i in range(5):
         main_random_cases = [make_random_case(9) for _ in range(100)]
         make_secret_test(main_random_cases, 'main_random')
     
     bonus_edge_cases = [
-        TestCase(10 ** 100, 0),
-        TestCase(0, 10 ** 100),
-        TestCase(10 ** 100, 10 ** 100),
+        TestCase("icosahedral"),
+        TestCase("iconolater"),
+        TestCase("licour"),
     ]
     make_secret_test(bonus_edge_cases, 'bonus_edge')
     
-    for i in range(5):
-        bonus_random_cases = [make_random_case(100) for _ in range(100)]
-        make_secret_test(bonus_random_cases, 'bonus_random')
 
 
 def make_test_in(cases, file):
@@ -117,7 +109,7 @@ def make_test_in(cases, file):
     T = len(cases)
     print(T, file=file)
     for case in cases:
-        print(f'{case.A} {case.B}', file=file)
+        print(f'{case.A}', file=file)
 
 
 def make_test_out(cases, file):
@@ -130,9 +122,9 @@ def make_test_out(cases, file):
     
     TODO Implement this for your problem by changing the import below.
     """
-    from caliconcatenation.submissions.accepted.caliconcatenation import solve
+    from submissions.accepted.caliconcatenation import solve
     for case in cases:
-        print(solve(case.A, case.B), file=file)
+        print(solve(case.A), file=file)
 
 
 def main():
