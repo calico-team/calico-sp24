@@ -9,14 +9,16 @@
 # passed=1
 
 for i in data/secret/*.in; do
+  # strip the extension
   test_path="${i%.*}"
+  # get testname (strip path)
   test_name=$(basename -- "$test_path")
   result=0
   echo "Running $test_path"
   if [[ "$1" == *.py ]] # Python 3
   then
     python3 "$1" < "$test_path.in" > "out/$test_name.out"
-    if ! diff -Zq "$test_path.ans" "out/$test_name.out" > /dev/null; then
+    if ! ./executables/compare/compare.py "$test_path.in" "$test_path.ans" < "out/$test_name.out"; then
       echo "failed on test $test_path"
       diff -Z "$test_path.ans" "out/$test_name.out"
     fi
