@@ -65,7 +65,9 @@ def make_secret_tests():
     TODO Write sample tests. Consider creating edge cases and large randomized
     tests.
 
-    TODO: Probably breakable by matching 100 chars
+    TODO: more tests...
+    - off by one
+    - all a's with 0.1% of b
     """
 
     def rand_str(n, c_cnt=26):
@@ -96,7 +98,7 @@ def make_secret_tests():
     def make_swap(len1, len2):
         s1 = rand_str(len1)
         s2 = generate_cut(s1, len2)
-        
+
         x = random.randint(0, len2-1)
         s2 = s2[:x] + 'a' + s2[x+1:]
         return TestCase(s1, s2)
