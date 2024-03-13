@@ -95,7 +95,13 @@ def make_secret_tests():
         s1 = rand_str(len1)
         s2 = generate_cut(s1, len2)
         return TestCase(s1, s2)
-
+    def make_swap(len1, len2):
+        s1 = rand_str(len1)
+        s2 = generate_cut(s1, len2)
+        
+        x = random.randint(0, len2-1)
+        s2 = s2[:x] + 'a' + s2[x+1:]
+        return TestCase(s1, s2)
     def make_random_case(len1, len2):
         if random.randint(1, 2) == 1:
             return make_random_bad(len1, len2)
@@ -107,15 +113,20 @@ def make_secret_tests():
 
     for i in range(5):
         main_random_cases = [make_random_case(10, 15) for _ in range(10)]
-        make_secret_test(main_random_cases, 'main_random')
+        make_secret_test(main_random_cases, 'small')
+
+    make_secret_test([make_random_case(1000, 1200) for _ in range(5)])
+    make_secret_test([make_random_case(1000, 1200) for _ in range(5)])
+    make_secret_test([make_random_case(1000, 1200) for _ in range(5)])
+    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'one_char_swapped')
+    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'one_char_swapped')
+    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'one_char_swapped')
 
 
 def make_test_in(cases: list[TestCase], file):
     """
     Print the input of each test case into the file in the format specified by
     the input format.
-    
-    TODO Implement this for your problem.
     """
     T = len(cases)
     print(T, file=file)
@@ -130,12 +141,10 @@ def make_test_out(cases, file):
     
     The easiest way to do this is to import a python reference solution to the
     problem and print the output of that.
-    
-    TODO Implement this for your problem by changing the import below.
     """
     from submissions.accepted.n_cube import solve
     for case in cases:
-        print(f"solving {len(case.A)} {len(case.B)}")
+        # print(f"solving {len(case.A)} {len(case.B)}")
         print(solve(case.A, case.B), file=file)
 
 
