@@ -8,7 +8,9 @@
 
 # passed=1
 
-for i in data/secret/*.in; do
+test_set=${2:-}
+
+for i in data/secret/secret_*$test_set*.in; do
   # strip the extension
   test_path="${i%.*}"
   # get testname (strip path)
