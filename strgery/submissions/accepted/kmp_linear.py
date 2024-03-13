@@ -24,10 +24,10 @@ def max_matching_prefix(T, P):
         while j > 0 and T[i] != P[j]:
             j = p[j - 1]
         if T[i] == P[j]: j += 1
+        # j is the length of the longest prefix in P that matches the end of T[:i]
         if j > ret:
             ret = j
             index = i
-        ret = max(ret, j)
         if j == len(P): 
         #     ret.append(i - (j - 1))
             j = p[j - 1]

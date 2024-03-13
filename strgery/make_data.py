@@ -27,9 +27,7 @@ class TestCase:
     Represents all the information needed to create the input and output for a
     single test case.
     
-    TODO Change this to store the relevant information for your problem.
     """
-
 
     def __init__(self, A, B):
         self.A = A
@@ -112,15 +110,21 @@ def make_secret_tests():
     # make_secret_test(main_edge_cases, 'main_edge')
 
     for i in range(5):
-        main_random_cases = [make_random_case(10, 15) for _ in range(10)]
-        make_secret_test(main_random_cases, 'small')
+        main_random_cases = [make_random_case(4, 6) for _ in range(15)]
+        make_secret_test(main_random_cases, 'main_small')
 
-    make_secret_test([make_random_case(1000, 1200) for _ in range(5)])
-    make_secret_test([make_random_case(1000, 1200) for _ in range(5)])
-    make_secret_test([make_random_case(1000, 1200) for _ in range(5)])
-    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'one_char_swapped')
-    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'one_char_swapped')
-    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'one_char_swapped')
+    make_secret_test([make_random_case(1000, 1200) for _ in range(5)], "main")
+    make_secret_test([make_random_case(1000, 1200) for _ in range(5)], "main")
+    make_secret_test([make_random_case(1000, 1200) for _ in range(5)], "main")
+    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'main_one_char_swapped')
+    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'main_one_char_swapped')
+    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'main_one_char_swapped')
+
+    l1 = int(1e6);
+    l2 = int(1e6);
+    make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
+    make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
+    make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
 
 
 def make_test_in(cases: list[TestCase], file):
@@ -142,9 +146,9 @@ def make_test_out(cases, file):
     The easiest way to do this is to import a python reference solution to the
     problem and print the output of that.
     """
-    from submissions.accepted.n_cube import solve
+    from submissions.accepted.kmp_linear import solve
     for case in cases:
-        # print(f"solving {len(case.A)} {len(case.B)}")
+        print(f"solving {len(case.A)} {len(case.B)}")
         print(solve(case.A, case.B), file=file)
 
 
