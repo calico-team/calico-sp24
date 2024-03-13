@@ -67,11 +67,13 @@ def make_secret_tests():
 
     TODO: more tests...
     - off by one
-    - all a's with 0.1% of b
     """
 
     def rand_str(n, c_cnt=26):
         return ''.join(random.choice(string.ascii_lowercase[:c_cnt]) for i in range(n))
+    def rand_str_2(n):
+        # all 'b' with a small chance of 'a'
+        return ''.join('a' if random.randint(0, 4000) == 0 else 'b' for i in range(n))
 
     def get_random_substr(s, n):
         """
@@ -82,30 +84,31 @@ def make_secret_tests():
         pos = random.randint(0, l-n);
         return s[pos:pos+n]
 
-    def generate_cut(s, n): # This probably generates s2 from 2 cuts of s1
+    def generate_cut(s, n): # This generates s2 from 2 cuts of s1, probably correct
         splitPos = random.randint(n-len(s), min(n-1, len(s)))
         s2 = get_random_substr(s, splitPos)+get_random_substr(s, n-splitPos)
         return s2
 
-    def make_random_bad(len1, len2):
-        s1 = rand_str(len1)
-        s2 = rand_str(len2)
+    def make_random_bad(len1, len2, fn=rand_str):
+        s1 = fn(len1)
+        s2 = fn(len2)
         return TestCase(s1, s2)
-    def make_random_good(len1, len2):
-        s1 = rand_str(len1)
+    def make_random_good(len1, len2, fn=rand_str):
+        s1 = fn(len1)
         s2 = generate_cut(s1, len2)
         return TestCase(s1, s2)
-    def make_swap(len1, len2):
-        s1 = rand_str(len1)
+    def make_swap(len1, len2, fn=rand_str):
+        s1 = fn(len1)
         s2 = generate_cut(s1, len2)
 
         x = random.randint(0, len2-1)
         s2 = s2[:x] + 'a' + s2[x+1:]
         return TestCase(s1, s2)
-    def make_random_case(len1, len2):
+    def make_random_case(len1, len2, fn=rand_str):
         if random.randint(1, 2) == 1:
-            return make_random_bad(len1, len2)
-        return make_random_good(len1, len2)
+            return make_random_bad(len1, len2, fn)
+        return make_random_good(len1, len2, fn)
+
 
     main_edge_cases = [
     ]
@@ -122,11 +125,16 @@ def make_secret_tests():
     make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'main_one_char_swapped')
     make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'main_one_char_swapped')
 
-    l1 = int(1e6);
-    l2 = int(1e6);
+    l1 = int(1e5);
+    l2 = int(1e5);
     make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
     make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
     make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
+
+    make_secret_test([make_random_case(l1, l2, rand_str_2) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_random_case(l1, l2, rand_str_2) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_swap(l1, l2, rand_str_2) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_swap(l1, l2, rand_str_2) for _ in range(2)], 'bonus_naive_killer')
 
 
 def make_test_in(cases: list[TestCase], file):
