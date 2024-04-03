@@ -9,6 +9,9 @@ class Solution {
      */
     static int solve(int A, int B, String C) {
         // YOUR CODE HERE
+        System.out.println("A: " + A);
+        System.out.println("B: " + B);
+        System.out.println("C: " + C);
         return -1;
     }
     
