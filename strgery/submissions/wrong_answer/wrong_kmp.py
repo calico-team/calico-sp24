@@ -1,3 +1,6 @@
+# fails when A = B (matching empty string errors)
+
+
 # https://gist.github.com/m00nlight/daa6786cc503fde12a77
 def partial(pattern):
     """ Calculate partial match table: String -> [Int]"""
@@ -19,8 +22,6 @@ def max_matching_prefix(T, P):
     p, j = partial(P), 0
     ret = 0
     index = 0
-    if P == '':
-        return ret, index
 
     for i in range(len(T)):
         while j > 0 and T[i] != P[j]:
@@ -49,12 +50,11 @@ def solve(A: str, B: str) -> str:
     return "-1"
 
 def main():
-    print(max_matching_prefix('aaaaa', 'aaaaa'))
-    # T = int(input())
-    # for _ in range(T):
-    #     A = input()
-    #     B = input()
-    #     print(solve(A, B))
+    T = int(input())
+    for _ in range(T):
+        A = input()
+        B = input()
+        print(solve(A, B))
 
 
 if __name__ == '__main__':

@@ -71,9 +71,9 @@ def make_secret_tests():
 
     def rand_str(n, c_cnt=26):
         return ''.join(random.choice(string.ascii_lowercase[:c_cnt]) for i in range(n))
-    def rand_str_2(n):
+    def rand_str_2_fn(p1):
         # all 'b' with a small chance of 'a'
-        return ''.join('a' if random.randint(0, 4000) == 0 else 'b' for i in range(n))
+        return lambda n: ''.join('a' if random.randint(0, p1) == 0 else 'b' for i in range(n))
 
     def get_random_substr(s, n):
         """
@@ -125,16 +125,26 @@ def make_secret_tests():
     make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'main_one_char_swapped')
     make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'main_one_char_swapped')
 
+    make_secret_test([make_random_case(i, i, lambda n: 'a'*n) for i in range(1,100)], "main_edge")
     l1 = int(1e5);
     l2 = int(1e5);
     make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
     make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
     make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
+    make_secret_test([make_random_case(l1, l1, lambda n: 'a'*n) for i in range(1,2)], "bonus_edge")
 
-    make_secret_test([make_random_case(l1, l2, rand_str_2) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_random_case(l1, l2, rand_str_2) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_swap(l1, l2, rand_str_2) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_swap(l1, l2, rand_str_2) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(4000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(8000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(10000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_swap(l1, l2, rand_str_2_fn(12000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_swap(l1, l2, rand_str_2_fn(12000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_swap(l1, l2, rand_str_2_fn(20000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_swap(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_swap(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
+    make_secret_test([make_swap(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
 
 
 def make_test_in(cases: list[TestCase], file):
@@ -159,7 +169,11 @@ def make_test_out(cases, file):
     from submissions.accepted.kmp_linear import solve
     for case in cases:
         print(f"solving {len(case.A)} {len(case.B)}")
+        # try:
         print(solve(case.A, case.B), file=file)
+        # except:
+            # print("failed on a case :(")
+            # print(case.A, case.B)
 
 
 def main():
