@@ -14,7 +14,7 @@ def main():
     for i in range(REPS):
         if i % 1000 == 0:
             print(i)
-        cp = subprocess.run([f"./{path_to_program}"], input=next_input, timeout=0.1, text=True, capture_output=True, shell=True)
+        cp = subprocess.run([f"./{path_to_program}"], input=next_input, text=True, capture_output=True, shell=True)
         next_input = cp.stdout
         # print(f"cp obj {cp}")
         # print(f"Finished Rep {i}")
