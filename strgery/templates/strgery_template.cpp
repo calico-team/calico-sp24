@@ -3,24 +3,23 @@
 using namespace std;
 
 /**
- * Return the CALICOncatenation of A.
+ * Print the start positions and lengths of two substrings of S, s1 and s2,
+ * such that concatenating s1 and s2 yields to P.
  *
- * A: a string of representing a single word
+ * S: The string you must find the substrings s1 and s2 in.
+ * P: The string you want to make by concatenating.
  */
 
-void solve(string A) {
-    // YOUR CODE HERE
-    bool has_ans;
-
-    return -1;
+void solve(string S, string P) {
+    return;
 }
 
 int main() {
     int T;
     cin >> T;
     for (int i = 0; i < T; i++) {
-        string A;
-        cin >> A;
-        cout << solve(A) << '\n';
+        string S, P;
+        cin >> S >> P;
+        solve(S, P);
     }
 }

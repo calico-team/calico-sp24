@@ -11,8 +11,9 @@ def solve(A: str, B: str):
 def main():
     T = int(input())
     for _ in range(T):
-        A, B = input().split()
-        print(solve(A, B))
+        S = input()
+        T = input()
+        solve(S, T)
 
 
 if __name__ == '__main__':
