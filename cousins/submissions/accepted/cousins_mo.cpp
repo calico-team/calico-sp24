@@ -16,11 +16,13 @@ void sieve() {
 
 void factorize(int x, unordered_map<int, int>& cnt) {
     for (int p : primes) {
+        if (p * p > x) break;
         while (x % p == 0) {
             ++cnt[p];
             x /= p;
         }
     }
+    if (x > 1) cnt[x] = 1;
 }
 
 struct cmp {
@@ -41,7 +43,8 @@ struct cmp {
  * G: description of each game
  */
 void solve(int N, int M, vector<int>& A, vector<vector<int>>& G) {
-    for (int i = 0; i < M; ++i) G[i].push_back(i);
+    if (primes.empty()) sieve();
+    for (int i = 0; i < M; ++i) G[i].push_back(i), --G[i][0], --G[i][1];
     vector<unordered_map<int, int>> factors(N);
     for (int i = 0; i < N; ++i)
         factorize(A[i], factors[i]);
@@ -72,7 +75,7 @@ void solve(int N, int M, vector<int>& A, vector<vector<int>>& G) {
         answers[q[2]] = (ans != 0);
     }
     for (int i = 0; i < M; ++i) {
-        cout << (answers[i] ? "IGNACIO" : "COUSINS") << '\n';
+        cout << (answers[i] ? "IGNACIO" : "COUSIN") << '\n';
     }
 }
 
@@ -86,9 +89,6 @@ int main() {
         cin >> A[i];
     for (int i = 0; i < M; ++i)
         cin >> G[i][0] >> G[i][1];
-    
-    sieve();
-
     solve(N, M, A, G);
     return 0;
 

@@ -3,7 +3,7 @@
 using namespace std;
 
 /**
- * For each game output who wins the game in one line.
+ * For each game, output who wins the game in one line.
  * 
  * N: size of the game board
  * M: number of different games
