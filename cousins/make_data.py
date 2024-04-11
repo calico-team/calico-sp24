@@ -32,8 +32,8 @@ class TestCase:
     TODO Change this to store the relevant information for your problem.
     """
 
-    max_N = 100_000
-    max_M = 100_000
+    max_N = 20_000
+    max_M = 20_000
     max_A = 10_000_000
 
     def __init__(self, N, M, A, G):
@@ -145,6 +145,10 @@ def board_small_primes(N):
     return A
 
 
+def board_different_primes(N):
+    global primes
+    return [primes[i % len(primes)] for i in range(N)]
+
 def games_random(N, M):
     G = []
     for i in range(M):
@@ -189,7 +193,7 @@ def make_secret_tests():
     """
     sieve()
     print('here')
-    for number_generation_type in [board_random_numbers, board_distributed_primes, board_small_primes]:
+    for number_generation_type in [board_random_numbers, board_distributed_primes, board_small_primes, board_different_primes]:
         print(number_generation_type.__name__)
         for games_generation_type in [games_random, games_kill_left, games_kill_right]:
             print(games_generation_type.__name__)

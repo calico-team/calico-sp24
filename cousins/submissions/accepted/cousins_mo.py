@@ -1,6 +1,6 @@
 import sys
+from math import sqrt
 
-SZ = 320
 primes = []
 bs = []
 
@@ -36,6 +36,7 @@ def factorize(x):
     return cnt
 
 
+
 def solve(N: int, M: int, A: list[int], G: list[list[int]], file) -> None:
     """
     For each game, output who wins the game in one line
@@ -47,6 +48,7 @@ def solve(N: int, M: int, A: list[int], G: list[list[int]], file) -> None:
     """
     if not primes:
         sieve()
+    SZ = int(sqrt(N))
     for i in range(M):
         G[i][0] -= 1
         G[i][1] -= 1

@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int SZ = 320;
+int SZ;
 vector<int> primes;
 bitset<3200> bs;
 
@@ -43,6 +43,7 @@ struct cmp {
  * G: description of each game
  */
 void solve(int N, int M, vector<int>& A, vector<vector<int>>& G) {
+    SZ = int(sqrt(N));
     if (primes.empty()) sieve();
     for (int i = 0; i < M; ++i) G[i].push_back(i), --G[i][0], --G[i][1];
     vector<unordered_map<int, int>> factors(N);
@@ -82,7 +83,7 @@ void solve(int N, int M, vector<int>& A, vector<vector<int>>& G) {
 }
 
 int main() {
-
+    cin.tie(0)->sync_with_stdio(0);
     int N, M;
     cin >> N >> M;
     vector<int> A(N);

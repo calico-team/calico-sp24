@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int SZ = 320;
 vector<int> primes;
 bitset<3200> bs;
 
@@ -80,7 +79,7 @@ void solve(int N, int M, vector<int>& A, vector<vector<int>>& G) {
 }
 
 int main() {
-
+    cin.tie(0)->sync_with_stdio(0);
     int N, M;
     cin >> N >> M;
     vector<int> A(N);

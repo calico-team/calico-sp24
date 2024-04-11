@@ -35,7 +35,7 @@ Typically this is 1 but feel free to adjust as necessary for your problem.
 
 TODO Change for your problem if desired.
 """
-TIME_LIMIT = 1
+TIME_LIMIT = 2
 
 """
 A list with strings containing the names of every test set.

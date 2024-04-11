@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int SZ = 320;
 vector<int> primes;
 bitset<3200> bs;
 
@@ -25,15 +24,6 @@ void factorize(int x, unordered_map<int, int>& cnt) {
     if (x > 1) cnt[x] = 1;
 }
 
-struct cmp {
-    bool operator () (vector<int> const& v1, vector<int> const& v2) {
-        if (v1[0] / SZ != v2[0] / SZ)
-            return v1[0] / SZ < v2[0] / SZ;
-        return (v1[0] / SZ & 1) ? (v1[1] < v2[1]) : (v1[1] > v2[1]);
-    }
-};
-
-
 /**
  * For each game output who wins the game in one line.
  * 
@@ -49,7 +39,7 @@ void solve(int N, int M, vector<int>& A, vector<vector<int>>& G) {
         factorize(A[i], factors[i]);
     for (auto& q : G) {
         unordered_map<int, int> cnt;
-        for (int i = q[0]; i <= q[1]; ++i) {
+        for (int i = q[0] - 1; i < q[1]; ++i) {
             for (auto& me : factors[i]) {
                 cnt[me.first] += me.second;
             }
@@ -63,7 +53,7 @@ void solve(int N, int M, vector<int>& A, vector<vector<int>>& G) {
 }
 
 int main() {
-
+    cin.tie(0)->sync_with_stdio(0);
     int N, M;
     cin >> N >> M;
     vector<int> A(N);
