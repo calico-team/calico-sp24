@@ -9,9 +9,9 @@ class Solution {
      * A: game board
      * G: description of each game
      */
-    static int solve(int N, int M, int[] A, int[][] G) {
+    static void solve(int N, int M, int[] A, int[][] G) {
         // YOUR CODE HERE
-        return -1;
+        return;
     }
     
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -30,7 +30,7 @@ class Solution {
             A[i] = Integer.parseInt(info[i]);
         }
         for (int i = 0; i < M; ++i) {
-            info = in.readLine().strip.split(" ");
+            info = in.readLine().strip().split(" ");
             for (int j = 0; j < 2; ++j) {
                 G[i][j] = Integer.parseInt(info[j]);
             }
