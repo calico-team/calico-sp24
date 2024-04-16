@@ -58,7 +58,7 @@ def solve(P: str, S: str):
                 return
         if i - m >= 0:
             # Try the case [... suffix ... prefix ...]
-            j = max_prefixes[i - m + fwd_important[i]]
+            j = max_prefixes[i - m]
             if fwd_important[i] + back_important[j] >= n:
                 # Solution found
                 print('there')
