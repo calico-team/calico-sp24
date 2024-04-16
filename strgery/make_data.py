@@ -72,6 +72,8 @@ def make_secret_tests():
 
     def rand_str(n, c_cnt=26):
         return ''.join(random.choice(string.ascii_lowercase[:c_cnt]) for i in range(n))
+    def rand_str_fn(c_cnt):
+        return lambda n: rand_str(n, c_cnt)
     def rand_str_2_fn(p1):
         # all 'b' with a small chance of 'a'
         return lambda n: ''.join('a' if random.randint(0, p1) == 0 else 'b' for i in range(n))
@@ -110,7 +112,7 @@ def make_secret_tests():
         s2 = s2[:x] + 'a' + s2[x+1:]
         return TestCase(s1, s2)
     def make_random_case(len1, len2, fn=rand_str):
-        if random.randint(1, 2) == 1:
+        if len2 > len1 or random.randint(1, 2) == 1:
             return make_random_bad(len1, len2, fn)
         return make_random_good(len1, len2, fn)
 
@@ -119,9 +121,15 @@ def make_secret_tests():
     ]
     # make_secret_test(main_edge_cases, 'main_edge')
 
-    for i in range(6,10):
-        main_random_cases = [make_random_case(i, 6) for _ in range(15)]
-        make_secret_test(main_random_cases, 'main_small')
+    for i in range(3,6):
+        for j in range(3,6):
+            for _ in range(10):
+                main_random_cases = [make_random_case(i, j, rand_str_fn(5)) for _ in range(10)]
+                make_secret_test(main_random_cases, 'main_small')
+
+    for _ in range(10):
+        main_random_cases = [make_random_case(random.randint(3,5), random.randint(3,5), rand_str_fn(2)) for _ in range(10)]
+        make_secret_test(main_random_cases, 'main_two_char')
 
     make_secret_test([make_random_case(1000, 1000) for _ in range(5)], "main")
     make_secret_test([make_random_case(1000, 800) for _ in range(5)], "main")
