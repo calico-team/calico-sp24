@@ -28,6 +28,8 @@ def solve(P: str, S: str):
     # back_important[i] = x means that the suffix of P of length x starts at i (inclusive)
     back_important = back_prefix[n + 2:]
     back_important = back_important[::-1]
+    print(fwd_important)
+    print(back_important)
 
     max_prefixes = [0 for _ in range(m)]
     for i in range(1, m):
@@ -50,13 +52,17 @@ def solve(P: str, S: str):
             j = max_suffixes[i + 1]
             if fwd_important[i] + back_important[j] >= n:
                 # Solution found
+                print('here')
+                print(i)
                 print(f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}')
                 return
-        if i - m + fwd_important[i] >= 0:
+        if i - m >= 0:
             # Try the case [... suffix ... prefix ...]
             j = max_prefixes[i - m + fwd_important[i]]
             if fwd_important[i] + back_important[j] >= n:
                 # Solution found
+                print('there')
+                print(i)
                 print(f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}')
                 return
     # No solution found
@@ -69,7 +75,7 @@ def main():
     # for _ in range(T):
     #     S, P = input().split()
     #     print(solve(S, P))
-    solve('calico', 'licoca')
+    solve('dfhmfh', 'dfhm')
 
 
 if __name__ == '__main__':
