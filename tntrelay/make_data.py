@@ -151,7 +151,7 @@ def make_test_in(cases, file):
     the input format.
     
     TODO Implement this for your problem.
-    """
+    """ 
     T = len(cases)
     print(T, file=file)
     assert 1 <= T <= max_T
