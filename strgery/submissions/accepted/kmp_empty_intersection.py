@@ -14,7 +14,7 @@ def compute_prefix_function(s: str) -> list[int]:
     return p
 
 
-def solve(P: str, S: str):
+def solve(S: str, P: str):
     """
     Finds nonempty s1, s2 in S with empty intersection such that s1 + s2 = P
     """
@@ -28,8 +28,6 @@ def solve(P: str, S: str):
     # back_important[i] = x means that the suffix of P of length x starts at i (inclusive)
     back_important = back_prefix[n + 2:]
     back_important = back_important[::-1]
-    print(fwd_important)
-    print(back_important)
 
     max_prefixes = [0 for _ in range(m)]
     for i in range(1, m):
@@ -52,30 +50,24 @@ def solve(P: str, S: str):
             j = max_suffixes[i + 1]
             if fwd_important[i] + back_important[j] >= n:
                 # Solution found
-                print('here')
-                print(i)
-                print(f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}')
-                return
+                return f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}'
         if i - m >= 0:
             # Try the case [... suffix ... prefix ...]
             j = max_prefixes[i - m]
             if fwd_important[i] + back_important[j] >= n:
                 # Solution found
-                print('there')
-                print(i)
-                print(f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}')
-                return
+                return f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}'
     # No solution found
-    print('IMPOSSIBLE')
-    return
+    return 'IMPOSSIBLE'
 
 
 def main():
-    # T = int(input())
-    # for _ in range(T):
-    #     S, P = input().split()
-    #     print(solve(S, P))
-    solve('dfhmfh', 'dfhm')
+    T = int(input())
+    for _ in range(T):
+        S = input()
+        P = input()
+        print(solve(S, P))
+    # print(solve('surgeryonastring', 'surgerystring'))
 
 
 if __name__ == '__main__':
