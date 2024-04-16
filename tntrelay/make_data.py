@@ -19,7 +19,11 @@ from calico_lib import make_sample_test, make_secret_test, make_data
 Seed for the random number generator. We need this so randomized tests will
 generate the same thing every time. Seeds can be integers or strings.
 """
-SEED = 'TODO Change this to something different, long, and arbitrary.'
+SEED = 'is tnt a relay an iran vs palpatine anime battle reference? nwn'
+
+max_N = 100
+max_K = 100
+max_T = 100
 
 
 class TestCase:
@@ -30,11 +34,30 @@ class TestCase:
     TODO Change this to store the relevant information for your problem.
     """
 
+    def __init__(self, N, K, S):
+        self.N = N
+        self.K = K
+        self.S = S
 
-    def __init__(self, A, B, C):
-        self.A = A
-        self.B = B
-        self.C = C
+    def is_correct(self):
+        if not (1 <= self.N <= max_N):
+            return False
+        if not (1 <= self.K <= max_N):
+            return False
+        if self.N != len(self.S):
+            return False
+        # It must be possible to compete i.e. there must not be a substring of length K + 1 with all '-'
+        cnt = 0
+        for i in range(self.N):
+            if self.S[i] not in ['-', '#']:
+                return False
+            if self.S[i] == '-':
+                cnt += 1
+                if cnt >= self.K + 1:
+                    return False
+            else:
+                cnt = 0
+        return True
 
 
 def make_sample_tests():
@@ -50,17 +73,15 @@ def make_sample_tests():
     identify edge cases.
     """
     main_sample_cases = [
-        TestCase(7, 9),
-        TestCase(420, 69),
-        TestCase(3, 0),
+        TestCase(6, 4, '###--#'),
+        TestCase(7, 4, '-####-#'),
+        TestCase(4, 4, '----'),
+        TestCase(12, 5, '#----##-#---'),
+        TestCase(20, 3, '###-#---###-#####--#')
     ]
     make_sample_test(main_sample_cases, 'main')
-    
-    bonus_sample_cases = [
-        TestCase(123456789, 987654321),
-        TestCase(3141592653589793238462643, 3832795028841971693993751),
-    ]
-    make_sample_test(bonus_sample_cases, 'bonus')
+
+    # TODO add bonus if we make linear sol?
 
 
 def make_secret_tests():
@@ -74,38 +95,54 @@ def make_secret_tests():
     TODO Write sample tests. Consider creating edge cases and large randomized
     tests.
     """
-    def make_random_case(max_digits):
-        def random_n_digit_number(n):
-            return random.randint(10 ** (n - 1), (10 ** n) - 1) if n != 0 else 0
-        A_digits = random.randint(0, max_digits)
-        B_digits = random.randint(0, max_digits)
-        A, B = random_n_digit_number(A_digits), random_n_digit_number(B_digits)
-        return TestCase(A, B)
-    
-    main_edge_cases = [
-        TestCase(0, 0),
-        TestCase(1, 0),
-        TestCase(0, 1),
-        TestCase(10 ** 9, 0),
-        TestCase(0, 10 ** 9),
-        TestCase(10 ** 9, 10 ** 9),
-    ]
-    make_secret_test(main_edge_cases, 'main_edge')
-    
-    for i in range(5):
-        main_random_cases = [make_random_case(9) for _ in range(100)]
-        make_secret_test(main_random_cases, 'main_random')
-    
-    bonus_edge_cases = [
-        TestCase(10 ** 100, 0),
-        TestCase(0, 10 ** 100),
-        TestCase(10 ** 100, 10 ** 100),
-    ]
-    make_secret_test(bonus_edge_cases, 'bonus_edge')
-    
-    for i in range(5):
-        bonus_random_cases = [make_random_case(100) for _ in range(100)]
-        make_secret_test(bonus_random_cases, 'bonus_random')
+
+    def make_random_string(_n, _k, prop1, prop2):
+        """
+        Creates random TNT run map of length N using jump K and prop1 / prop2 chance to place TNT instead of air
+        """
+        ans = []
+        cnt = 0
+        for _ in range(_n):
+            if cnt == _k or random.randint(0, prop2 - 1) < prop1:
+                ans.append('#')
+                cnt = 0
+            else:
+                ans.append('-')
+                cnt += 1
+        return ''.join(ans)
+
+    def create_infinity_case(_n):
+        _n = min(_n, max_K)
+        _k = random.randint(_n, max_K)
+        s = make_random_string(_n, _k, 1, 2)
+        return TestCase(_n, _k, s)
+
+    def create_full_case(_n, _k):
+        s = make_random_string(_n, _k, 1, 1)
+        return TestCase(_n, _k, s)
+
+    def create_random_case(_n, _k, prop1, prop2):
+        s = make_random_string(_n, _k, prop1, prop2)
+        return TestCase(_n, _k, s)
+
+    for _ in range(10):
+        batch = []
+        for tc in range(max_T):
+            rng = random.randint(1, 10)
+            n = random.randint(9 * max_N // 10, max_N)
+            k = random.randint(1, min(n - 1, max_K))
+            if rng <= 8:
+                # Just a random case
+                batch.append(create_random_case(n, k, rng, 10))
+            elif rng == 9:
+                # Full case
+                batch.append(create_full_case(n, k))
+            else:
+                # Infinity case
+                batch.append(create_infinity_case(n))
+        make_secret_test(batch, 'main_random')
+
+    # TODO Think of edge cases maybe
 
 
 def make_test_in(cases, file):
@@ -117,8 +154,11 @@ def make_test_in(cases, file):
     """
     T = len(cases)
     print(T, file=file)
+    assert 1 <= T <= max_T
     for case in cases:
-        print(f'{case.A} {case.B}', file=file)
+        print(f'{case.N} {case.K}', file=file)
+        print(case.S, file=file)
+        assert case.is_correct()
 
 
 def make_test_out(cases, file):
@@ -131,16 +171,16 @@ def make_test_out(cases, file):
     
     TODO Implement this for your problem by changing the import below.
     """
-    from submissions.accepted.add_arbitrary import solve
+    from submissions.accepted.tntrelay_sliding_window import solve
     for case in cases:
-        print(solve(case.A, case.B), file=file)
+        print(solve(case.N, case.K, case.S), file=file)
 
 
 def main():
     """
     Let the library do the rest of the work!
     """
-    make_data(make_sample_tests, make_secret_tests, \
+    make_data(make_sample_tests, make_secret_tests,
               make_test_in, make_test_out, SEED)
 
 

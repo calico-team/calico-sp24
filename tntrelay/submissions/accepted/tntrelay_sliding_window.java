@@ -4,16 +4,35 @@ class Solution {
     /**
      * Return the maximum number of players that can make it across the TNT run.
      * If infinitely many players can complete the course, return -1
-     * 
+     *
      * N: number of blocks in the course
      * K: maximum jump distance of every player
      * S: description of the TNT run
      */
     static int solve(int N, int K, String S) {
-        // YOUR CODE HERE
-        return 0;
+        if (K >= N) {
+            return -1;
+        }
+        ++K;
+        int mx = 0, cur = 0;
+        for (int i = 0; i < K; ++i) {
+            if (S.charAt(i) == '-') {
+                ++cur;
+            }
+            mx = Math.max(cur, mx);
+        }
+        for (int i = K; i < N; ++i) {
+            if (S.charAt(i) == '-') {
+                ++cur;
+            }
+            if (S.charAt(i - K) == '-') {
+                --cur;
+            }
+            mx = Math.max(cur, mx);
+        }
+        return K - mx;
     }
-    
+
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static PrintWriter out = new PrintWriter(System.out);
 
