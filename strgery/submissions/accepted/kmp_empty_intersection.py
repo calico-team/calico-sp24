@@ -52,9 +52,9 @@ def solve(S: str, P: str):
             if fwd_important[i] + back_important[j] >= n:
                 # Solution found
                 return f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}'
-        if i - m + 1 >= 0:
+        if i - n + 1 >= 0:
             # Try the case [... suffix ... prefix ...]
-            j = max_prefixes[i - m + 1]
+            j = max_prefixes[i - n + 1]
             if fwd_important[i] + back_important[j] >= n:
                 # Solution found
                 return f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}'
@@ -63,12 +63,12 @@ def solve(S: str, P: str):
 
 
 def main():
-    T = int(input())
-    for _ in range(T):
-        S = input()
-        P = input()
-        print(solve(S, P))
-    # print(solve('surgeryonastring', 'surgerystring'))
+    # T = int(input())
+    # for _ in range(T):
+    #     S = input()
+    #     P = input()
+    #     print(solve(S, P))
+    print(solve('zwclevue', 'eclevu'))
 
 if __name__ == '__main__':
     main()
