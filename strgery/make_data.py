@@ -84,6 +84,12 @@ def make_secret_tests():
         """
         l = len(s)
         assert n <= l
+
+        rng = random.randint(0, 3)
+        if rng == 0:
+            return s[0:n]
+        if rng == 1:
+            return s[l-n:]
         pos = random.randint(0, l-n);
         return s[pos:pos+n]
 
