@@ -10,12 +10,24 @@ class Solution {
      * E: the list of ending blocks
      */
     static void solve(int N, char[] S, char[] E) {
-        out.println(N);
-        for (char s: S) {
-        out.println(s);
+        boolean ans = true;
+        int cnt = 0;
+        for (int i = 0; i < N; ++i) {
+            if (S[i] == '-' && E[i] == '#') {
+                ans = false;
+            } else if (S[i] == '#' && E[i] == '-') {
+                cnt = 0;
+            } else {
+                ++cnt;
+                if (cnt > 4) {
+                    ans = false;
+                }
+            }
         }
-        for (char e: E) {
-        out.println(e);
+        if (ans) {
+            out.println("YES");
+        } else {
+            out.println("banned");
         }
         return;
     }

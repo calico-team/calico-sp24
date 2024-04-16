@@ -10,13 +10,6 @@ class Solution {
      * E: the list of ending blocks
      */
     static void solve(int N, char[] S, char[] E) {
-        out.println(N);
-        for (char s: S) {
-        out.println(s);
-        }
-        for (char e: E) {
-        out.println(e);
-        }
         return;
     }
     

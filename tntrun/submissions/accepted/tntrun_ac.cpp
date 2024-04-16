@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cassert>
 
 using namespace std;
 
@@ -15,14 +16,13 @@ void solve(int N, vector<char> S, vector<char> E) {
     bool ans = true;
     int cnt = 0;
     for (int i = 0; i < N; i++) {
-        if (S[i] == '-' && E[i] == '#') {
+        if (S[i] == '-' && E[i] == '#') { // Added a TNT block
+            assert(false); // This should happen because of test case constraints
             ans = false;
-        }
-        if (S[i] == '#' && E[i] == '-') {
+        } else if (S[i] == '#' && E[i] == '-') { // Used a TNT block to jump
             cnt = 0;
-        }
-        if (S[i] == E[i]) {
-            cnt += 1;
+        } else { // Jumped over this block
+            ++cnt;
             if (cnt > 4) {
                 ans = false;
             }
@@ -30,10 +30,11 @@ void solve(int N, vector<char> S, vector<char> E) {
     }
 
     if (ans) {
-        cout << "YES" << '\n';
+        cout << "YES\n";
     } else {
-        cout << "banned" << '\n';
+        cout << "banned\n";
     }
+    
     return;
 }
 

@@ -26,7 +26,7 @@ Names should be short if possible.
 
 TODO Change this for your problem.
 """
-PROBLEM_NAME = 'quickstack'
+PROBLEM_NAME = 'tntrun'
 
 """
 The time limit in seconds.
@@ -45,7 +45,7 @@ should only return names from this list.
 
 TODO Change for your problem if desired.
 """
-TEST_SET_NAMES = ['main', 'bonus']
+TEST_SET_NAMES = ['main']
 
 
 def is_data_in_test_set(data_file_name, test_set_name):
@@ -56,9 +56,7 @@ def is_data_in_test_set(data_file_name, test_set_name):
     TODO Change this to reflect your tests and test sets.
     """
     if test_set_name == 'main':
-        return 'main' in data_file_name
-    elif test_set_name == 'bonus':
-        return 'main' in data_file_name or 'bonus' in data_file_name
+        return True
 
 
 def is_submission_in_test_set(submission_file_name, test_set_name):
@@ -70,12 +68,10 @@ def is_submission_in_test_set(submission_file_name, test_set_name):
     """
     file_to_sets = {
         # accepted
-        'quickstack_brute': ['main'],
-        'quickstack_count':   ['main', 'bonus'],
-        'quickstack_sort':  ['main', 'bonus'],
+        'tntrun_ac' : ['main'],
 
         # tle
-        'quickstack_brute_tle': ['bonus'],
+        'tntrun_check_5': ['main'],
 
     }
     

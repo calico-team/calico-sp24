@@ -13,6 +13,7 @@ You can also run this file with the -v argument to see debug prints.
 """
 
 max_N = 100
+max_T = 100
 
 import os
 import random
@@ -34,8 +35,18 @@ class TestCase:
 
     def __init__(self, N, S, E):
         self.N = N
-        self.course_start = S
-        self.course_end = E
+        self.S = S
+        self.E = E
+
+    def is_correct(self):
+        if not (1 <= self.N <= max_N):
+            return False
+        if not (self.N == len(self.S) and self.N == len(self.E)):
+            return False
+        for i in range(self.N):
+            if self.S[i] == '-' and self.E[i] == '#':
+                return False
+        return True
 
 
 def make_sample_tests():
@@ -50,7 +61,7 @@ def make_sample_tests():
         TestCase(6, "###--#", "-#----"),
         TestCase(7, "-####-#", "-####--"),
         TestCase(4, "----", "----"),
-        TestCase(12, "#----##-#---", "#-----##----"),
+        TestCase(12, "#----##-#---", "#-----#-----"),
         TestCase(20, "###-#---###-#####--#", "#-#-----#---#--##---"),
     ]
     make_sample_test(main_sample_cases, 'main')
@@ -65,7 +76,6 @@ def make_secret_tests():
     See calico_lib.make_secret_test for more info.
     """
 
-
     def random_cases(n, t):
         def one_case():
             start = ""
@@ -78,13 +88,39 @@ def make_secret_tests():
                     end += "-" * spacing + "#"
                 else:
                     end += "-" * (spacing + 1)
+            start = start[:n]
+            end = end[:n]
             return TestCase(n, start, end)
-        return [one_case() for _ in range(t)]
 
+        def ok_case():
+            start = []
+            for _ in range(n):
+                start.append('-' if random.randint(0, 10) == 1 else '#')
+            end = start[:]
+            for k in range(n):
+                cnt, j = 0, k
+                while j < n and end[j] == '#' and cnt < 6:
+                    j += 1
+                    cnt += 1
+                if cnt < 3:
+                    continue
+                take_away = random.randint(0, cnt - 2)
+                for j in range(k + 1, k + 1 + take_away):
+                    end[j] = '-'
+            for k in range(n - 2):
+                if end[k] == '#' and end[k+1] == '#' and end[k+2] == '#':
+                    end[k+1] = '-'
+            start = ''.join(start)
+            end = ''.join(end)
+            return TestCase(n, start, end)
+        ans = []
+        for _ in range(t):
+            ans.append(one_case() if random.randint(0, 1) == 1 else ok_case())
+        return ans
 
     for i in range(10):
         make_secret_test(random_cases(max_N, 100), 'main_random')
-    
+
 
 def make_test_in(cases, file):
     """
@@ -92,24 +128,25 @@ def make_test_in(cases, file):
     the input format.
     """
     file_name = os.path.basename(file.name)
-    
+
     T = len(cases)
-    assert 1 <= T <= 100
-    
+    assert 1 <= T <= max_T
     print(T, file=file)
     for case in cases:
-        print(f'{case.N}\n{case.course_start}\n{case.course_end}', file=file)
-        
+
+        print(case.N, file=file)
+        print(case.S, file=file)
+        print(case.E, file=file)
+
         if 'main' in file_name:
-            assert 1 <= case.N <= max_N
+            assert case.is_correct()
         else:
             raise 'bruh wtf u named ur test file wrong'
-        
+
         # print(*case.sequences, file=file)
-        
-    
+
     if 'bonus_2' in file_name:
-        assert(sum(case.N for case in cases) <= 10 ** 12)        
+        assert (sum(case.N for case in cases) <= 10 ** 12)
 
 
 def make_test_out(cases, file):
@@ -122,9 +159,9 @@ def make_test_out(cases, file):
     """
     from submissions.accepted.tntrun_ac import solve
     for case in cases:
-        ans = solve(case.N, case.course_start, case.course_end)
+        ans = solve(case.N, case.S, case.E)
         print(ans, file=file)
-        
+
 
 def main():
     """
