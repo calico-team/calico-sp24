@@ -43,6 +43,7 @@ def solve(P: str, S: str):
     for i in range(m):
         if fwd_important[i] == n:
             # Won't add anything since s1, s2 have to be non-empty and the case n - 1 is in i - 1
+            # One could argue that P[0:N-1] == P[1:N] could happen, but in that case P is constant and the other case already covers it.
             continue
         if fwd_important[i] == 0:
             # Can't be non-empty
@@ -52,17 +53,13 @@ def solve(P: str, S: str):
             j = max_suffixes[i + 1]
             if fwd_important[i] + back_important[j] >= n:
                 # Solution found
-                print('here')
-                print(i)
                 print(f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}')
                 return
-        if i - m >= 0:
+        if i - m + 1 >= 0:
             # Try the case [... suffix ... prefix ...]
-            j = max_prefixes[i - m]
+            j = max_prefixes[i - m + 1]
             if fwd_important[i] + back_important[j] >= n:
                 # Solution found
-                print('there')
-                print(i)
                 print(f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}')
                 return
     # No solution found
@@ -75,7 +72,7 @@ def main():
     # for _ in range(T):
     #     S, P = input().split()
     #     print(solve(S, P))
-    solve('dfhmfh', 'dfhm')
+    solve('defabc', 'abcdef')
 
 
 if __name__ == '__main__':
