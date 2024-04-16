@@ -67,6 +67,7 @@ def make_secret_tests():
 
     TODO: more tests...
     - off by one
+    - cases where |P| > |S|
     """
 
     def rand_str(n, c_cnt=26):
@@ -85,8 +86,12 @@ def make_secret_tests():
         return s[pos:pos+n]
 
     def generate_cut(s, n): # This generates s2 from 2 cuts of s1, probably correct
-        splitPos = random.randint(n-len(s), min(n-1, len(s)))
-        s2 = get_random_substr(s, splitPos)+get_random_substr(s, n-splitPos)
+        splitPos = random.randint(max(1, n-len(s)), min(n-1, len(s)))
+        k = random.randint(splitPos, len(s) - (n-splitPos))
+        if random.randint(0, 1) == 0:
+            s2 = get_random_substr(s[:k], splitPos) + get_random_substr(s[k:], n-splitPos)
+        else:
+            s2 = get_random_substr(s[k:], n-splitPos) + get_random_substr(s[:k], splitPos)
         return s2
 
     def make_random_bad(len1, len2, fn=rand_str):
@@ -114,18 +119,18 @@ def make_secret_tests():
     ]
     # make_secret_test(main_edge_cases, 'main_edge')
 
-    for i in range(5):
-        main_random_cases = [make_random_case(4, 6) for _ in range(15)]
+    for i in range(6,10):
+        main_random_cases = [make_random_case(i, 6) for _ in range(15)]
         make_secret_test(main_random_cases, 'main_small')
 
-    make_secret_test([make_random_case(1000, 1200) for _ in range(5)], "main")
-    make_secret_test([make_random_case(1000, 1200) for _ in range(5)], "main")
-    make_secret_test([make_random_case(1000, 1200) for _ in range(5)], "main")
-    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'main_one_char_swapped')
-    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'main_one_char_swapped')
-    make_secret_test([make_swap(1000, 1200) for _ in range(5)], 'main_one_char_swapped')
+    make_secret_test([make_random_case(1000, 1000) for _ in range(5)], "main")
+    make_secret_test([make_random_case(1000, 800) for _ in range(5)], "main")
+    make_secret_test([make_random_case(1000, 900) for _ in range(5)], "main")
+    make_secret_test([make_swap(1000, 800) for _ in range(5)], 'main_one_char_swapped')
+    make_secret_test([make_swap(1000, 100) for _ in range(5)], 'main_one_char_swapped')
+    make_secret_test([make_swap(1000, 200) for _ in range(5)], 'main_one_char_swapped')
 
-    make_secret_test([make_random_case(i, i, lambda n: 'a'*n) for i in range(1,100)], "main_edge")
+    make_secret_test([make_random_case(i, i, lambda n: 'a'*n) for i in range(2,100)], "main_edge")
     l1 = int(1e5);
     l2 = int(1e5);
     make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
@@ -166,9 +171,9 @@ def make_test_out(cases, file):
     The easiest way to do this is to import a python reference solution to the
     problem and print the output of that.
     """
-    from submissions.accepted.kmp_linear import solve
+    from submissions.accepted.kmp_empty_intersection import solve
     for case in cases:
-        print(f"solving {len(case.A)} {len(case.B)}")
+        print(f"solving {file}: {len(case.A)} {len(case.B)}")
         # try:
         print(solve(case.A, case.B), file=file)
         # except:
