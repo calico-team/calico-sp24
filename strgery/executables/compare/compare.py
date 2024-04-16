@@ -21,7 +21,7 @@ def check_case(is_reference, values, test_out, case):
     first_line = read_file(test_out).split() if is_reference else read().split()
 
     # If the line is impossible then we don't read anything else
-    if len(first_line) == 1 and first_line[0] == '-1':
+    if len(first_line) == 1 and first_line[0] == 'IMPOSSIBLE':
         return False
 
     # Read the line
@@ -50,11 +50,12 @@ def check_case(is_reference, values, test_out, case):
     a, b, c, d = solution
     # Build the result
     result = values[0][a:a+b] + values[0][c:c+d]
+    # TODO check if overlap
 
     # Check that the result match the second string
     if values[1] != result:
-        print(f'Test #{case}: [Reference? {is_reference}] : The resulting string do not match',
-              f'{values}',
+        print(f'Test #{case}: [Reference? {is_reference}] : The resulting string do not match; ',
+              f'Test case: {values};',
               f'{result}',
               f'{solution}',
               )
