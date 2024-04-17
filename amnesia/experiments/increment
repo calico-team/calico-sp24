@@ -3,4 +3,5 @@
 MYDIR=$(dirname $0)
 
 # python3 "$MYDIR/increment.py"
-./a.out
+# ./a.out
+java Solution
