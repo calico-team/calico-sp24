@@ -18,57 +18,51 @@ def solve(S: str, P: str):
     """
     Finds nonempty s1, s2 in S with empty intersection such that s1 + s2 = P
     """
-    n, m = len(P), len(S)
-    fwd_str = P + "#" + S
-    back_str = P[::-1] + "#" + S[::-1]
-    fwd_prefix = compute_prefix_function(fwd_str)
-    back_prefix = compute_prefix_function(back_str)
-    # fwd_important[i] = x means that the prefix of P of length x ends in i (inclusive)
-    fwd_important = fwd_prefix[n + 2:]
-    # back_important[i] = x means that the suffix of P of length x starts at i (inclusive)
-    back_important = back_prefix[n + 2:]
-    back_important = back_important[::-1]
+    N, M = len(S), len(P)
+    T1 = P + '#' + S
+    T2 = P[::-1] + '#' + S[::-1]
+    # prefix[i] = j means that there is a prefix of P of length j that ends at index i
+    prefix = compute_prefix_function(T1)[M + 2:]
+    # suffix[i] = j means that there is a suffix of P of length j that starts from index i
+    suffix = compute_prefix_function(T2)[M + 2:][::-1]
 
-    max_prefixes = [0 for _ in range(m)]
-    for i in range(1, m):
-        max_prefixes[i] = i if back_important[max_prefixes[i - 1]] < back_important[i] else max_prefixes[i - 1]
+    left_idx = [0 for _ in range(N)]
+    for i in range(1, N):
+        left_idx[i] = i if suffix[i] > suffix[left_idx[i - 1]] else left_idx[i - 1]
+    right_idx = [N - 1 for i in range(N)]
+    for i in range(0, N - 1)[::-1]:
+        right_idx[i] = i if suffix[i] > suffix[right_idx[i + 1]] else right_idx[i + 1]
 
-    max_suffixes = [m - 1 for _ in range(m)]
-    for i in range(0, m - 1)[::-1]:
-        max_suffixes[i] = i if back_important[max_suffixes[i + 1]] < back_important[i] else max_suffixes[i + 1]
+    def check(i, j):
+        # Tries to build the solution with s1 ending at i and s2 starting at j
+        return min(prefix[i], M - 1) + min(suffix[j], M - 1) >= M
 
-    assert m == len(fwd_important)
-    for i in range(m):
-        if fwd_important[i] == n:
-            # Won't add anything since s1, s2 have to be non-empty and the case n - 1 is in i - 1
-            # One could argue that P[0:N-1] == P[1:N] could happen, but in that case P is constant and the other case already covers it.
-            continue
-        if fwd_important[i] == 0:
-            # Can't be non-empty
-            continue
-        if i + 1 < m:
-            # Try the case [... prefix ... suffix ...]
-            j = max_suffixes[i + 1]
-            if fwd_important[i] + back_important[j] >= n:
-                # Solution found
-                return f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}'
-        if i - n + 1 >= 0:
-            # Try the case [... suffix ... prefix ...]
-            j = max_prefixes[i - n + 1]
-            if fwd_important[i] + back_important[j] >= n:
-                # Solution found
-                return f'{i - fwd_important[i] + 1} {fwd_important[i]} {j} {n - fwd_important[i]}'
-    # No solution found
+    def build_sol(i, j):
+        # Tries to build the solution with s1 ending at i and s2 starting at j
+        prefix[i] = min(prefix[i], M - 1)
+        j += suffix[j] + prefix[i] - M
+        return f'{i - prefix[i] + 1} {prefix[i]} {j} {M - prefix[i]}'
+
+    # Test S = [ ... s1 ... s2 ... ]
+    for i in range(0, N - 1):
+        if check(i, right_idx[i + 1]):
+            return build_sol(i, right_idx[i + 1])
+
+    # Test S = [ ... s2 ... s1 ... ]
+    for i in range(M - 1, N):
+        if check(i, left_idx[i - M + 1]):
+            return build_sol(i, left_idx[i - M + 1])
+
     return 'IMPOSSIBLE'
 
 
 def main():
-    # T = int(input())
-    # for _ in range(T):
-    #     S = input()
-    #     P = input()
-    #     print(solve(S, P))
-    print(solve('zwclevue', 'eclevu'))
+    T = int(input())
+    for _ in range(T):
+        S = input()
+        P = input()
+        print(solve(S, P))
+
 
 if __name__ == '__main__':
     main()
