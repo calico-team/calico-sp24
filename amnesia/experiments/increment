@@ -2,4 +2,5 @@
 
 MYDIR=$(dirname $0)
 
-pypy3 "$MYDIR/increment.py"
+# python3 "$MYDIR/increment.py"
+./a.out
