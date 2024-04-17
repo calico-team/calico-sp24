@@ -31,9 +31,10 @@ class TestCase:
     """
 
 
-    def __init__(self, N, M):
+    def __init__(self, N, M, arr):
         self.N = N
         self.M = M
+        self.arr = arr
 
 def make_sample_tests():
     """
@@ -47,17 +48,20 @@ def make_sample_tests():
     understanding of the problem, help with debugging, or possibly help
     identify edge cases.
     """
+    arr1 = [['L', 'D'], ['D', 'O']]
+    arr2 = [['O', 'L', 'D'], ['O', 'D', 'O'], ['D', 'L', 'O']]
 
     main_sample_cases = [
-        TestCase(5, 5)
+        TestCase(2, 2, arr1),
+        TestCase(3, 3, arr2)
     ]
     make_sample_test(main_sample_cases, 'main')
     
-    bonus_sample_cases = [
-        TestCase(123456789, 987654321),
-        TestCase(3141592653589793238462643, 3832795028841971693993751),
-    ]
-    make_sample_test(bonus_sample_cases, 'bonus')
+    # bonus_sample_cases = [
+    #     TestCase(123456789, 987654321),
+    #     TestCase(3141592653589793238462643, 3832795028841971693993751),
+    # ]
+    # make_sample_test(bonus_sample_cases, 'bonus')
 
 
 def make_secret_tests():
@@ -71,38 +75,25 @@ def make_secret_tests():
     TODO Write sample tests. Consider creating edge cases and large randomized
     tests.
     """
-    def make_random_case(max_digits):
-        def random_n_digit_number(n):
-            return random.randint(10 ** (n - 1), (10 ** n) - 1) if n != 0 else 0
-        A_digits = random.randint(0, max_digits)
-        B_digits = random.randint(0, max_digits)
-        A, B = random_n_digit_number(A_digits), random_n_digit_number(B_digits)
-        return TestCase(A, B)
-    
-    main_edge_cases = [
-        TestCase(0, 0),
-        TestCase(1, 0),
-        TestCase(0, 1),
-        TestCase(10 ** 9, 0),
-        TestCase(0, 10 ** 9),
-        TestCase(10 ** 9, 10 ** 9),
-    ]
-    make_secret_test(main_edge_cases, 'main_edge')
+    def make_random_case(N, M):
+        arr = []
+        for i in range(N):
+            arr.append([])
+            for j in range(M):
+                block = random.randint(0, 2)
+                if block == 0:
+                    arr[i].append('O')
+                elif block == 1:
+                    arr[i].append('L')
+                else:
+                    arr[i].append('D')
+        return TestCase(N, M, arr)
     
     for i in range(5):
-        main_random_cases = [make_random_case(9) for _ in range(100)]
+        N_digit = random.randint(0, 100)
+        M_digit = random.randint(0, 100)
+        main_random_cases = [make_random_case(N_digit, M_digit) for _ in range(10)]
         make_secret_test(main_random_cases, 'main_random')
-    
-    bonus_edge_cases = [
-        TestCase(10 ** 100, 0),
-        TestCase(0, 10 ** 100),
-        TestCase(10 ** 100, 10 ** 100),
-    ]
-    make_secret_test(bonus_edge_cases, 'bonus_edge')
-    
-    for i in range(5):
-        bonus_random_cases = [make_random_case(100) for _ in range(100)]
-        make_secret_test(bonus_random_cases, 'bonus_random')
 
 
 def make_test_in(cases, file):
@@ -115,7 +106,12 @@ def make_test_in(cases, file):
     T = len(cases)
     print(T, file=file)
     for case in cases:
-        print(f'{case.A} {case.B}', file=file)
+        print(f'{case.N} {case.M}', file=file)
+        for i in range(case.N):
+            str = ""
+            for j in range(case.M):
+                str += case.arr[i][j]
+            print(f'{str}', file = file)
 
 
 def make_test_out(cases, file):
@@ -128,9 +124,9 @@ def make_test_out(cases, file):
     
     TODO Implement this for your problem by changing the import below.
     """
-    from submissions.accepted.add_arbitrary import solve
-    for case in cases:
-        print(solve(case.A, case.B), file=file)
+    # from submissions.accepted.add_arbitrary import solve
+    # for case in cases:
+    #     print(solve(case.N, case.M, case.arr), file=file)
 
 
 def main():
