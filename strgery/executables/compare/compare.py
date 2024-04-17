@@ -51,6 +51,15 @@ def check_case(is_reference, values, test_out, case):
     # Build the result
     result = values[0][a:a+b] + values[0][c:c+d]
     # TODO check if overlap
+    if b <= 0 or d <= 0 or (a <= c and a + b > c) or (c <= a and c + d > a):
+        print(f'Test #{case}: [Reference? {is_reference}] : bad segment ',
+              f'Test case: {values};',
+              f'{solution}',
+              )
+        if is_reference:
+            exit(1)
+        else:
+            return False
 
     # Check that the result match the second string
     if values[1] != result:
