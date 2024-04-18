@@ -47,11 +47,14 @@ def make_sample_tests():
     identify edge cases.
     """
     main_sample_cases = [
-            TestCase("calico", "licoca"),
-            TestCase("caliconcatenation", "calicocaliconcatenation"),
-            TestCase("aaaaaa", "aaaaaaaaaaa"),
-            TestCase("caliconcatenation", "tencalico"),
-            ]
+        TestCase("surgeryonastring", "surgerystring"),
+        TestCase("surgeryonastring", "astringsurgery"),
+        TestCase("strgerystrgerystrgerystrgery", "strstr"),
+        TestCase("surgeryonastring", "stringonasurgery"),
+        TestCase("aaaaaaab", "aaaaaaaaa"),
+        TestCase("ab", "ab"),
+        TestCase("a", "a"),
+    ]
     make_sample_test(main_sample_cases, 'main')
 
 def make_secret_tests():
@@ -124,46 +127,51 @@ def make_secret_tests():
 
 
     main_edge_cases = [
+        TestCase('z', 'z'),
+        TestCase('c', 'c'),
+        TestCase('b', 'b'),
+        TestCase('q', 'r'),
+        TestCase('i', 'j'),
+        TestCase('l', 'l'),
     ]
-    # make_secret_test(main_edge_cases, 'main_edge')
+    make_secret_test(main_edge_cases, 'main_edge')
 
     for i in range(3,6):
         for j in range(3,6):
-            for _ in range(10):
-                main_random_cases = [make_random_case(i, j, rand_str_fn(5)) for _ in range(10)]
-                make_secret_test(main_random_cases, 'main_small')
+            main_random_cases = [make_random_case(i, j, rand_str_fn(5)) for _ in range(100)]
+            make_secret_test(main_random_cases, 'main_small')
 
-    for _ in range(10):
-        main_random_cases = [make_random_case(random.randint(3,5), random.randint(3,5), rand_str_fn(2)) for _ in range(10)]
-        make_secret_test(main_random_cases, 'main_two_char')
+    main_random_cases = [make_random_case(random.randint(3,5), random.randint(3,5), rand_str_fn(2)) for _ in range(100)]
+    make_secret_test(main_random_cases, 'main_two_char')
+    main_random_cases = [make_random_case(random.randint(16, 20), random.randint(16, 20), rand_str_fn(2)) for _ in range(100)]
+    make_secret_test(main_random_cases, 'main_two_char')
+    main_random_cases = [make_random_case(random.randint(3,5), random.randint(3,5), rand_str_fn(3)) for _ in range(100)]
+    make_secret_test(main_random_cases, 'main_three_char')
 
-    make_secret_test([make_random_case(1000, 1000) for _ in range(5)], "main")
-    make_secret_test([make_random_case(1000, 800) for _ in range(5)], "main")
-    make_secret_test([make_random_case(1000, 900) for _ in range(5)], "main")
-    make_secret_test([make_swap(1000, 800) for _ in range(5)], 'main_one_char_swapped')
-    make_secret_test([make_swap(1000, 100) for _ in range(5)], 'main_one_char_swapped')
-    make_secret_test([make_swap(1000, 200) for _ in range(5)], 'main_one_char_swapped')
+    rng = random.randint
 
-    make_secret_test([make_random_case(i, i, lambda n: 'a'*n) for i in range(2,100)], "main_edge")
+    for i in range(5):
+        make_secret_test([make_random_case(1000, 1000)], "bonus")
+        make_secret_test([make_random_case(1000, 800)], "bonus")
+        make_secret_test([make_random_case(1000, 400)], "bonus")
+    for i in range(5):
+        make_secret_test([make_swap(1000, 1000)], 'bonus_one_char_swapped')
+        make_secret_test([make_swap(1000, 800)], 'bonus_one_char_swapped')
+        make_secret_test([make_swap(1000, 400)], 'bonus_one_char_swapped')
+
+    for i in range(600, 1200, 50):
+        make_secret_test([make_random_case(1000, 1000, rand_str_2_fn(i))], 'bonus_killer')
+        make_secret_test([make_random_case(1000, 500, rand_str_2_fn(i))], 'bonus_killer')
+        make_secret_test([make_swap(1000, 1000, rand_str_2_fn(i))], 'bonus_killer')
+        make_secret_test([make_swap(1000, 500, rand_str_2_fn(i))], 'bonus_killer')
+
     l1 = int(1e5);
-    l2 = int(1e5);
-    make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
-    make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
-    make_secret_test([make_swap(l1, l2) for _ in range(5)], 'bonus_one_char_swapped')
-    make_secret_test([make_random_case(l1, l1, lambda n: 'a'*n) for i in range(1,2)], "bonus_edge")
-
-    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(4000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(8000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(10000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_random_case(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_swap(l1, l2, rand_str_2_fn(12000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_swap(l1, l2, rand_str_2_fn(12000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_swap(l1, l2, rand_str_2_fn(20000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_swap(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_swap(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
-    make_secret_test([make_swap(l1, l2, rand_str_2_fn(40000)) for _ in range(2)], 'bonus_naive_killer')
+    l2 = int(5e4);
+    for i in range(int(0.5e5), int(1.4e5), int(1e4)):
+        make_secret_test([make_random_case(l1, l1, rand_str_2_fn(i))], 'bonus2_killer')
+        make_secret_test([make_swap(l1, l1, rand_str_2_fn(i))], 'bonus2_killer')
+        make_secret_test([make_random_case(l1, l2, rand_str_2_fn(i))], 'bonus2_killer')
+        make_secret_test([make_swap(l1, l2, rand_str_2_fn(i))], 'bonus2_killer')
 
 
 def make_test_in(cases: list[TestCase], file):
