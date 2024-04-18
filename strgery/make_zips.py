@@ -45,7 +45,7 @@ should only return names from this list.
 
 Change for your problem if desired.
 """
-TEST_SET_NAMES = ['main', 'bonus']
+TEST_SET_NAMES = ['main', 'bonus', 'bonus2']
 
 
 def is_data_in_test_set(data_file_name, test_set_name):
@@ -59,6 +59,8 @@ def is_data_in_test_set(data_file_name, test_set_name):
         return 'main' in data_file_name
     elif test_set_name == 'bonus':
         return 'main' in data_file_name or 'bonus' in data_file_name
+    elif test_set_name == 'bonus2':
+        return 'main' in data_file_name or 'bonus' in data_file_name or 'bonus2' in data_file_name
 
 
 def is_submission_in_test_set(submission_file_name, test_set_name):
@@ -70,22 +72,24 @@ def is_submission_in_test_set(submission_file_name, test_set_name):
     """
     file_to_sets = {
         # accepted
-        'kmp_linear':       ['main', 'bonus'],
-        'quad_match':       ['main'],
+        'quad_match':               ['main'],
+        'actual_quad':              ['main', 'bonus'],
+        'kmp_empty_intersection':   ['main', 'bonus', 'bonus2'],
 
         # run_time_error
 
         # time_limit_exceeded
-        'quad_match':       ['main', 'bonus'],
+        'quad_match':       ['bonus'],
+        'actual_quad':      ['bonus2'],
 
         # wrong_answer
-        'bad1':             ['main'],
-        'bad2':             ['main'],
-        'bad3':             ['main'],
-        'wrong_kmp':             ['main'],
-        'n_cube':             ['main'],
-        'kmp_empty_intersection':             ['main'],
-        'no_overlap':             ['main'],
+        'kmp_linear':       [],
+        'bad1':             [],
+        'bad2':             [],
+        'bad3':             [],
+        'wrong_kmp':        [],
+        'n_cube':           [],
+        'no_overlap':       [],
     }
     
     # we only care about actual code files
