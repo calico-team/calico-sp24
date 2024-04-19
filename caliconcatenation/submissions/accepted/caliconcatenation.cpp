@@ -10,16 +10,13 @@ string caplico = "CALICO";
 string solve(string A) {
     int i = 0;
     int max = 0;
-    while (i < min(calico.length(), A.length())) {
-        if (calico.substr(calico.length()-i-1 , calico.length()) == A.substr(0, i+1)) {
+    for (int i = 1; i <= min(6, int(A.size())); ++i) {
+        if (calico.substr(6 - i, i) == A.substr(0, i)) {
             max = i;
         }
-        i++;
     }
-    if (max == 0) {
-        return A;
-    }
-    return caplico + A.substr(max + 1, A.length());
+    if (max == 0) return A;
+    else return caplico + A.substr(max, int(A.size()) - max);
 }
 
 int main() {

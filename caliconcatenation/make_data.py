@@ -31,10 +31,9 @@ class TestCase:
     TODO Change this to store the relevant information for your problem.
     """
 
-
     def __init__(self, A):
         self.A = A
- 
+
 
 def make_sample_tests():
     """
@@ -57,7 +56,7 @@ def make_sample_tests():
         TestCase("corvettes"),
     ]
     make_sample_test(main_sample_cases, 'main')
-    
+
 
 def make_secret_tests():
     """
@@ -70,6 +69,7 @@ def make_secret_tests():
     TODO Write sample tests. Consider creating edge cases and large randomized
     tests.
     """
+
     def make_random_case(max_digits):
 
         with open('caliconcatenation/cali.json', 'r') as file:
@@ -80,22 +80,20 @@ def make_secret_tests():
         for category, entries in data.items():
             result[category] = entries[:50]
 
-        flat = [item for sublist in result.values() for item in sublist] 
+        flat = [item for sublist in result.values() for item in sublist]
         A = random.choice(flat)
         return TestCase(A)
-    
-    
+
     for i in range(5):
         main_random_cases = [make_random_case(9) for _ in range(100)]
         make_secret_test(main_random_cases, 'main_random')
-    
+
     bonus_edge_cases = [
         TestCase("icosahedral"),
         TestCase("iconolater"),
         TestCase("licour"),
     ]
-    make_secret_test(bonus_edge_cases, 'bonus_edge')
-    
+    make_secret_test(bonus_edge_cases, 'main_edge')
 
 
 def make_test_in(cases, file):

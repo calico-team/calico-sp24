@@ -7,7 +7,7 @@ using namespace std;
  * A: a string of representing a single word
  */
 
-int solve(string A) {
+string solve(string A) {
     // YOUR CODE HERE
     return -1;
 }
