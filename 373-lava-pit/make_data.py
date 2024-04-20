@@ -31,10 +31,10 @@ class TestCase:
     """
 
 
-    def __init__(self, N, M, arr):
+    def __init__(self, N, M, G):
         self.N = N
         self.M = M
-        self.arr = arr
+        self.G = G
 
 def make_sample_tests():
     """
@@ -48,12 +48,12 @@ def make_sample_tests():
     understanding of the problem, help with debugging, or possibly help
     identify edge cases.
     """
-    arr1 = [['L', 'D'], ['D', 'O']]
-    arr2 = [['O', 'L', 'D'], ['O', 'D', 'O'], ['D', 'L', 'O']]
+    G1 = ["LD", "DO"]
+    G2 = ["OLD", "ODO", "DLO"]
 
     main_sample_cases = [
-        TestCase(2, 2, arr1),
-        TestCase(3, 3, arr2)
+        TestCase(2, 2, G1),
+        TestCase(3, 3, G2)
     ]
     make_sample_test(main_sample_cases, 'main')
     
@@ -76,18 +76,18 @@ def make_secret_tests():
     tests.
     """
     def make_random_case(N, M):
-        arr = []
+        G = []
         for i in range(N):
-            arr.append([])
+            G.append("")
             for j in range(M):
                 block = random.randint(0, 2)
                 if block == 0:
-                    arr[i].append('O')
+                    G[i] += "O"
                 elif block == 1:
-                    arr[i].append('L')
+                    G[i] += "L"
                 else:
-                    arr[i].append('D')
-        return TestCase(N, M, arr)
+                    G[i] += "D"
+        return TestCase(N, M, G)
     
     for i in range(5):
         N_digit = random.randint(0, 100)
@@ -108,9 +108,7 @@ def make_test_in(cases, file):
     for case in cases:
         print(f'{case.N} {case.M}', file=file)
         for i in range(case.N):
-            str = ""
-            for j in range(case.M):
-                str += case.arr[i][j]
+            str = case.G[i]
             print(f'{str}', file = file)
 
 
@@ -124,9 +122,9 @@ def make_test_out(cases, file):
     
     TODO Implement this for your problem by changing the import below.
     """
-    # from submissions.accepted.add_arbitrary import solve
-    # for case in cases:
-    #     print(solve(case.N, case.M, case.arr), file=file)
+    from submissions.accepted.lavapit import solve
+    for case in cases:
+        print(solve(case.N, case.M, case.G), file=file)
 
 
 def main():
