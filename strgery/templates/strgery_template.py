@@ -1,6 +1,6 @@
 # TODO!!!!
 # TODO: change the variable name to fit problem
-def solve(A: str, B: str):
+def solve(S: str, P: str):
     """
     =========== TODO Description ========
 
@@ -12,8 +12,8 @@ def main():
     T = int(input())
     for _ in range(T):
         S = input()
-        T = input()
-        solve(S, T)
+        P = input()
+        solve(S, P)
 
 
 if __name__ == '__main__':

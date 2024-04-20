@@ -52,35 +52,33 @@ def is_data_in_test_set(data_file_name, test_set_name):
     """
     Return True if the data (test .in or .ans) file named data_file_name
     should be added to the test set named test_set_name.
-    
+
     Change this to reflect your tests and test sets.
     """
     if test_set_name == 'main':
         return 'main' in data_file_name
     elif test_set_name == 'bonus':
-        return 'main' in data_file_name or 'bonus' in data_file_name
+        return 'bonus2' not in data_file_name
     elif test_set_name == 'bonus2':
-        return 'main' in data_file_name or 'bonus' in data_file_name or 'bonus2' in data_file_name
+        return True
 
 
 def is_submission_in_test_set(submission_file_name, test_set_name):
     """
     Return True if the submission file named submission_file_name should be
     added to the test set named test_set_name.
-    
+
     TODO Change this to reflect your submissions and test sets.
     """
     file_to_sets = {
         # accepted
-        'quad_match':               ['main'],
-        'actual_quad':              ['main', 'bonus'],
-        'kmp_empty_intersection':   ['main', 'bonus', 'bonus2'],
+        'quad_match':               ['main', 'bonus'],
+        'actual_quad':              ['bonus', 'bonus2'],
+        'kmp_empty_intersection':   ['bonus2'],
 
         # run_time_error
 
         # time_limit_exceeded
-        'quad_match':       ['bonus'],
-        'actual_quad':      ['bonus2'],
 
         # wrong_answer
         'kmp_linear':       [],
