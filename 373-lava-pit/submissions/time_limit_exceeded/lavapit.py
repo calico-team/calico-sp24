@@ -32,7 +32,7 @@ def solve(N: int, M: int, G: list[str]):
             # used bucket at (x, y) with x < i and y < j
             used = max(used, max(memo[i - 1][j].row, memo[i - 1][j].used) if G[i][j] != 'L' else -inf)
 
-        if j != 0: # Came from (i, j - 1)
+        if j != 0:  # Came from (i, j - 1)
             # use bucket at (x, y) = (i, j)
             yes = max(yes, memo[i][j - 1].no)
             # never used a bucket

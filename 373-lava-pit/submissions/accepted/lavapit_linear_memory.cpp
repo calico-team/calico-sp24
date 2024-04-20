@@ -22,69 +22,72 @@ struct Solution {
  */
 int solve(int N, int M, vector<string> G) {
 
-    vector<vector<Solution>> dp(N, vector<Solution>(M, {-INF, -INF, -INF, -INF, -INF}));
+    vector<Solution> dp(M, {-INF, -INF, -INF, -INF, -INF});
 
     auto calculate_state = [&](int i, int j) -> void {
+        int yes = -INF, no = -INF, row = -INF, col = -INF, used = -INF;
         if (i != 0) {  // What if we come from (i - 1, j)
-            dp[i][j].yes = max(
-                dp[i][j].yes,
-                dp[i - 1][j].no
+            yes = max(
+                yes,
+                dp[j].no
             );
-            dp[i][j].no = max(
-                dp[i][j].no,
-                G[i][j] == 'L' ? -INF : dp[i - 1][j].no
+            no = max(
+                no,
+                G[i][j] == 'L' ? -INF : dp[j].no
             );
-            dp[i][j].col = max(
-                dp[i][j].col,
-                max(dp[i - 1][j].col, dp[i - 1][j].yes)
+            col = max(
+                col,
+                max(dp[j].col, dp[j].yes)
             );
-            dp[i][j].used = max(
-                dp[i][j].used,
+            used = max(
+                used,
                 G[i][j] == 'L' ? -INF : max(
-                    dp[i - 1][j].used,
-                    dp[i - 1][j].row
+                    dp[j].used,
+                    dp[j].row
                 )
             );
         }
 
         if (j != 0) { // What if we come from (i, j - 1)
-            dp[i][j].yes = max(
-                dp[i][j].yes,
-                dp[i][j - 1].no
+            yes = max(
+                yes,
+                dp[j - 1].no
             );
-            dp[i][j].no = max(
-                dp[i][j].no,
-                G[i][j] == 'L' ? -INF : dp[i][j - 1].no
+            no = max(
+                no,
+                G[i][j] == 'L' ? -INF : dp[j - 1].no
             );
-            dp[i][j].row = max(
-                dp[i][j].row,
-                max(dp[i][j - 1].yes, dp[i][j - 1].row)
+            row = max(
+                row,
+                max(dp[j - 1].yes, dp[j - 1].row)
             );
-            dp[i][j].used = max(
-                dp[i][j].used,
+            used = max(
+                used,
                 G[i][j] == 'L' ? -INF : max(
-                    dp[i][j - 1].col,
-                    dp[i][j - 1].used
+                    dp[j - 1].col,
+                    dp[j - 1].used
                 )
             );
         }
 
         if (G[i][j] == 'D') {  // Really don't care if it's impossible since 1 - INF = -INF
-            ++dp[i][j].yes;
-            ++dp[i][j].no;
-            ++dp[i][j].row;
-            ++dp[i][j].col;
-            ++dp[i][j].used;
+            ++yes;
+            ++no;
+            ++row;
+            ++col;
+            ++used;
         }
+
+        dp[j] = { yes, no, row, col, used };
 
     };
 
     if (G[0][0] == 'L') {
-        dp[0][0].yes = 0;
+        dp[0].yes = 0;
     } else if (G[0][0] == 'D') {
-        dp[0][0].yes = dp[0][0].no = 1;
+        dp[0].yes = dp[0].no = 1;
     } else {
-        dp[0][0].yes = dp[0][0].no = 0;
+        dp[0].yes = dp[0].no = 0;
     }
 
     for (int i = 0; i < N; ++i) {
@@ -93,7 +96,7 @@ int solve(int N, int M, vector<string> G) {
         }
     }
 
-    Solution ans = dp[N - 1][M - 1];
+    Solution ans = dp[M - 1];
     return max({ans.yes, ans.no, ans.row, ans.col, ans.used});
 
 }

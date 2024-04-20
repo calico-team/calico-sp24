@@ -115,6 +115,7 @@ def make_secret_tests():
         [3, 1, 3],  # A bit of lava
         [3, 6, 9],  # TES 369 !!
         [3, 1, 0],  # No diamonds but check impossible case!!
+        [0, 2, 5],  # Might find impossible solutions with a lot of diamonds.
     ]
 
     def weights_to_name(w):
@@ -130,6 +131,8 @@ def make_secret_tests():
             return '333666999'
         elif w == weights[5]:
             return 'only_coal'
+        elif w == weights[6]:
+            return 'diamonds_and_lava'
 
     def make_random_case(N, M, w):
         G = []
@@ -143,15 +146,10 @@ def make_secret_tests():
     # Make random small cases
     for w in weights:
         batch = []
-        total_N, total_M = 0, 0
         for _ in range(max_T):
-            N = random.randint(1, min(max_N, max_total_N - total_N))
-            M = random.randint(1, min(max_M, max_total_M - total_M))
+            N = random.randint(9 * max_N // (max_T * 10), max_N // max_T)
+            M = random.randint(9 * max_M // (max_T * 10), max_M // max_T)
             batch.append(make_random_case(N, M, w))
-            total_N += N
-            total_M += M
-            if total_N == max_total_N or total_M == max_total_M:
-                break
         random.shuffle(batch)
         make_secret_test(batch, f'main_random_small_{weights_to_name(w)}')
 
@@ -189,7 +187,7 @@ def make_test_out(cases, file):
     
     TODO Implement this for your problem by changing the import below.
     """
-    from submissions.accepted.lavapit import solve
+    from submissions.accepted.lavapit_linear_memory import solve
     for case in cases:
         print(solve(case.N, case.M, case.G), file=file)
 

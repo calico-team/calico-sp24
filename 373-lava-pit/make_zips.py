@@ -70,6 +70,7 @@ def is_submission_in_test_set(submission_file_name, test_set_name):
         # accepted
         'lavapit':          ['main'],
         'lava_pit':         ['main'],
+        'lavapit_linear_memory': ['main'],
         
         # run_time_error
         
