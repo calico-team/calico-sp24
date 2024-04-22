@@ -60,6 +60,15 @@ def is_submission_in_test_set(submission_file_name, test_set_name):
     file_to_sets = {
         # accepted
         'oven':    ['main'],
+        
+        # bad
+        'crash':    ['main'],
+        'infinite_loop':    ['main'],
+        'non_integer_multiline':    ['main'],
+        'non_integer':    ['main'],
+        'overflow':    ['main'],
+        'slow_compute':    ['main'],
+        'sleep':    ['main'],
     }
     
     # we only care about actual code files
