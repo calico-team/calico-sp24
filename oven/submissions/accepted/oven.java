@@ -16,6 +16,6 @@ class Solution {
     public static void main(String[] args) throws IOException {
         int D = Integer.parseInt(in.readLine());
         String A = in.readLine();
-        System.out.println(solve(D, A))
+        System.out.println(solve(D, A));
     }
 }
