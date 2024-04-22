@@ -54,12 +54,11 @@ def is_submission_in_test_set(submission_file_name, test_set_name):
     """
     Return True if the submission file named submission_file_name should be
     added to the test set named test_set_name.
-    
-    TODO Change this to reflect your submissions and test sets.
     """
     file_to_sets = {
         # accepted
         'oven':    ['main'],
+        'oven_slow':    ['main'],
         
         # bad
         'crash':    ['main'],
