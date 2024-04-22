@@ -55,9 +55,9 @@ def make_secret_tests():
     TestCase as the first parameter and an optional name for second parameter.
     See calico_lib.make_secret_test for more info.
     """
-    make_secret_test([TestCase(1, 'I' * 999)], 'main_edge_increment')
-    make_secret_test([TestCase(1000, 'D' * 999)], 'main_edge_decrement')
-    make_secret_test([TestCase(500, 'M' * 1000)], 'main_edge_maintain')
+    make_secret_test([TestCase(1, 'I' * 500)], 'main_edge_increment')
+    make_secret_test([TestCase(1000, 'D' * 500)], 'main_edge_decrement')
+    make_secret_test([TestCase(500, 'M' * 500)], 'main_edge_maintain')
     
     def make_random_case():
         increment_bias = random.random()
@@ -65,7 +65,7 @@ def make_secret_tests():
         
         D = initial_D
         As = ''
-        for _ in range(1000):
+        for _ in range(500):
             if random.randint(0, 1):
                 As += 'M'
             elif D == 1 or D < 1000 and random.random() < increment_bias:
@@ -92,7 +92,7 @@ def make_test_in(cases, file):
     assert 1 <= initial_D <= 1000
     
     As = cases[0].As
-    assert 1 <= len(As) <= 1000
+    assert 1 <= len(As) <= 500
     assert set(As) | set('IDM') == set('IDM')
     
     print(initial_D, file=file)
