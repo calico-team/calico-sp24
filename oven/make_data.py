@@ -118,8 +118,7 @@ def make_test_out(cases, file):
         elif A == 'D':
             D -= 1
         assert 1 <= D <= 1000, f'D should be between 1 and 1000, was {D} instead'
-    
-    print('AC', file=file)
+        print(D, file=file)
 
 
 def main():
