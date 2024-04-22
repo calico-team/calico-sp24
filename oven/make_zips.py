@@ -31,7 +31,7 @@ The time limit in seconds.
 
 Typically this is 1 but feel free to adjust as necessary for your problem.
 """
-TIME_LIMIT = 45
+TIME_LIMIT = 0.1
 
 """
 A list with strings containing the names of every test set.
