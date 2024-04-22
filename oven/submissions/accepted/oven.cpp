@@ -8,7 +8,7 @@ int solve(int D, string A) {
     } else if (A == "DECREMENT") {
         return D - 1;
     } else {
-        return 0;
+        return D;
     }
 }
 

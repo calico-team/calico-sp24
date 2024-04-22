@@ -7,7 +7,7 @@ class Solution {
         } else if (A.equals("DECREMENT")) {
             return D - 1;
         } else {
-            return 0;
+            return D;
         }
     }
     
