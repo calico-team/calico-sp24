@@ -19,21 +19,18 @@ from calico_lib import make_sample_test, make_secret_test, make_data
 Seed for the random number generator. We need this so randomized tests will
 generate the same thing every time. Seeds can be integers or strings.
 """
-SEED = 'TODO Change this to something different, long, and arbitrary.'
+SEED = 'we making uncle gordon proud with this one 🗣🗣🗣🗣🗣🔥🔥🔥🔥🔥'
 
 
 class TestCase:
     """
     Represents all the information needed to create the input and output for a
     single test case.
-    
-    TODO Change this to store the relevant information for your problem.
     """
 
-
-    def __init__(self, A, B):
-        self.A = A
-        self.B = B
+    def __init__(self, initial_D, As):
+        self.initial_D = initial_D # Deja vu I've just been in this place before
+        self.As = As
 
 
 def make_sample_tests():
@@ -43,23 +40,11 @@ def make_sample_tests():
     To create a pair of sample test files, call make_sample_test with a list of
     TestCase as the first parameter and an optional name for second parameter.
     See calico_lib.make_sample_test for more info.
-    
-    TODO Write sample tests. Consider creating cases that help build
-    understanding of the problem, help with debugging, or possibly help
-    identify edge cases.
     """
     main_sample_cases = [
-        TestCase(7, 9),
-        TestCase(420, 69),
-        TestCase(3, 0),
+        TestCase(41, 'DMII'),
     ]
     make_sample_test(main_sample_cases, 'main')
-    
-    bonus_sample_cases = [
-        TestCase(123456789, 987654321),
-        TestCase(3141592653589793238462643, 3832795028841971693993751),
-    ]
-    make_sample_test(bonus_sample_cases, 'bonus')
 
 
 def make_secret_tests():
@@ -69,55 +54,49 @@ def make_secret_tests():
     To create a pair of sample test files, call make_secret_test with a list of
     TestCase as the first parameter and an optional name for second parameter.
     See calico_lib.make_secret_test for more info.
-    
-    TODO Write sample tests. Consider creating edge cases and large randomized
-    tests.
     """
-    def make_random_case(max_digits):
-        def random_n_digit_number(n):
-            return random.randint(10 ** (n - 1), (10 ** n) - 1) if n != 0 else 0
-        A_digits = random.randint(0, max_digits)
-        B_digits = random.randint(0, max_digits)
-        A, B = random_n_digit_number(A_digits), random_n_digit_number(B_digits)
-        return TestCase(A, B)
+    make_secret_test([TestCase(1, 'I' * 999)], 'main_edge_increment')
+    make_secret_test([TestCase(1000, 'D' * 999)], 'main_edge_decrement')
+    make_secret_test([TestCase(500, 'M' * 1000)], 'main_edge_maintain')
     
-    main_edge_cases = [
-        TestCase(0, 0),
-        TestCase(1, 0),
-        TestCase(0, 1),
-        TestCase(10 ** 9, 0),
-        TestCase(0, 10 ** 9),
-        TestCase(10 ** 9, 10 ** 9),
-    ]
-    make_secret_test(main_edge_cases, 'main_edge')
+    def make_random_case():
+        increment_bias = random.random()
+        initial_D = random.randint(1, 1000)
+        
+        D = initial_D
+        As = ''
+        for _ in range(1000):
+            if random.randint(0, 1):
+                As += 'M'
+            elif D == 1 or D < 1000 and random.random() < increment_bias:
+                As += 'I'
+                D += 1
+            else:
+                As += 'D'
+                D -= 1
+        
+        return TestCase(initial_D, As)
     
-    for i in range(5):
-        main_random_cases = [make_random_case(9) for _ in range(100)]
-        make_secret_test(main_random_cases, 'main_random')
-    
-    bonus_edge_cases = [
-        TestCase(10 ** 100, 0),
-        TestCase(0, 10 ** 100),
-        TestCase(10 ** 100, 10 ** 100),
-    ]
-    make_secret_test(bonus_edge_cases, 'bonus_edge')
-    
-    for i in range(5):
-        bonus_random_cases = [make_random_case(100) for _ in range(100)]
-        make_secret_test(bonus_random_cases, 'bonus_random')
+    for i in range(7):
+        make_secret_test([make_random_case()], 'main_random')
 
 
 def make_test_in(cases, file):
     """
     Print the input of each test case into the file in the format specified by
     the input format.
-    
-    TODO Implement this for your problem.
     """
-    T = len(cases)
-    print(T, file=file)
-    for case in cases:
-        print(f'{case.A} {case.B}', file=file)
+    assert len(cases) == 1
+    
+    initial_D = cases[0].initial_D
+    assert 1 <= initial_D <= 1000
+    
+    As = cases[0].As
+    assert 1 <= len(As) <= 1000
+    assert set(As) | set('IDM') == set('IDM')
+    
+    print(initial_D, file=file)
+    print(As, file=file)
 
 
 def make_test_out(cases, file):
@@ -127,12 +106,20 @@ def make_test_out(cases, file):
     
     The easiest way to do this is to import a python reference solution to the
     problem and print the output of that.
-    
-    TODO Implement this for your problem by changing the import below.
     """
-    from submissions.accepted.add_arbitrary import solve
-    for case in cases:
-        print(solve(case.A, case.B), file=file)
+    assert len(cases) == 1
+    
+    initial_D = cases[0].initial_D
+    As = cases[0].As
+    D = initial_D
+    for A in As:
+        if A == 'I':
+            D += 1
+        elif A == 'D':
+            D -= 1
+        assert 1 <= D <= 1000, f'D should be between 1 and 1000, was {D} instead'
+    
+    print(D, file=file)
 
 
 def main():
