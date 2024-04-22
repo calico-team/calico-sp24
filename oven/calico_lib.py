@@ -237,6 +237,7 @@ def zip_metadata(zip_file, problem_name, test_set_name, time_limit):
             problem_name = '*' + problem_name
         print(f'name={problem_name}_{test_set_name}', file=meta_file)    
         print(f'timelimit={time_limit}', file=meta_file)
+        print(f'special_run=\'oven_run\'', file=meta_file)
     
     zip_file.write(meta_path, 'domjudge-problem.ini')
     os.remove(meta_path)
