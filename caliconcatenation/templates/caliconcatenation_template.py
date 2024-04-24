@@ -1,17 +1,16 @@
-def solve(A: str) -> str:
+def solve(S: str) -> str:
     """
-    Return the CALICOncatenation of A.
+    Return the CALICOncatenation of S.
 
-    A: a string of representing a single word
+    S: a string of representing a single word
     """
-    print(A);
-    return 0
+    return ''
 
 def main():
     T = int(input())
     for _ in range(T):
-        A = input()
-        print(solve(A))
+        S = input()
+        print(solve(S))
 
 
 if __name__ == '__main__':

@@ -14,6 +14,8 @@ You can also run this file with the -v argument to see debug prints.
 
 import random
 import json
+import string
+
 from calico_lib import make_sample_test, make_secret_test, make_data
 
 """
@@ -22,6 +24,8 @@ generate the same thing every time. Seeds can be integers or strings.
 """
 SEED = 'ongaongaongaongaongaongaongaongaongaongaongaongaongaongaongaongaongaonga.'
 
+max_len = 500
+max_T = 100
 
 class TestCase:
     """
@@ -31,8 +35,15 @@ class TestCase:
     TODO Change this to store the relevant information for your problem.
     """
 
-    def __init__(self, A):
-        self.A = A
+    def __init__(self, S):
+        self.S = S
+
+    def is_correct(self):
+        if not (1 <= len(self.S) <= max_len):
+            return False
+        if self.S in {'o', 'co', 'ico', 'lico', 'alico'}:
+            return False
+        return True
 
 
 def make_sample_tests():
@@ -54,6 +65,7 @@ def make_sample_tests():
         TestCase("cosmopolitan"),
         TestCase("calico"),
         TestCase("corvettes"),
+        TestCase("bigben"),
     ]
     make_sample_test(main_sample_cases, 'main')
 
@@ -70,22 +82,25 @@ def make_secret_tests():
     tests.
     """
 
-    def make_random_case(max_digits):
+    with open('cali.json', 'r') as file:
+        data = json.load(file)
 
-        with open('caliconcatenation/cali.json', 'r') as file:
-            data = json.load(file)
+    result = {}
 
-        result = {}
+    for category, entries in data.items():
+        result[category] = entries[:50]
 
-        for category, entries in data.items():
-            result[category] = entries[:50]
+    flat = [item for sublist in result.values() for item in sublist]
 
-        flat = [item for sublist in result.values() for item in sublist]
-        A = random.choice(flat)
-        return TestCase(A)
+    for i in range(len(flat) // 2):
+        flat.append(
+            ''.join(
+                random.choice(string.ascii_lowercase) for _ in range(random.randint(9 * max_len // 10, max_len))
+            )
+        )
 
     for i in range(5):
-        main_random_cases = [make_random_case(9) for _ in range(100)]
+        main_random_cases = [TestCase(random.choice(flat)) for _ in range(max_T)]
         make_secret_test(main_random_cases, 'main_random')
 
     bonus_edge_cases = [
@@ -105,8 +120,10 @@ def make_test_in(cases, file):
     """
     T = len(cases)
     print(T, file=file)
+    assert 1 <= T <= max_T
     for case in cases:
-        print(f'{case.A}', file=file)
+        print(f'{case.S}', file=file)
+        assert case.is_correct()
 
 
 def make_test_out(cases, file):
@@ -121,7 +138,7 @@ def make_test_out(cases, file):
     """
     from submissions.accepted.caliconcatenation import solve
     for case in cases:
-        print(solve(case.A), file=file)
+        print(solve(case.S), file=file)
 
 
 def main():

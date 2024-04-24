@@ -2,22 +2,22 @@
 using namespace std;
 
 /**
- * Return the CALICOncatenation of A.
+ * Return the CALICOncatenation of S.
  *
- * A: a string of representing a single word
+ * S: a string of representing a single word
  */
 
-string solve(string A) {
+string solve(string S) {
     // YOUR CODE HERE
-    return -1;
+    return "";
 }
 
 int main() {
     int T;
     cin >> T;
     for (int i = 0; i < T; i++) {
-        string A;
-        cin >> A;
-        cout << solve(A) << '\n';
+        string S;
+        cin >> S;
+        cout << solve(S) << '\n';
     }
 }

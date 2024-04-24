@@ -2,26 +2,26 @@ import java.io.*;
 
 class Solution {
     /**
-     * Return the CALICOncatenation of A.
+     * Return the CALICOncatenation of S.
      *
-     * A: a string of representing a single word 
+     * S: a string of representing a single word 
      */
-    static String solve(String A) {
+    static String solve(String S) {
         String calico = "CALICO";
         String calico_lower = "calico";
         int max_character_match = 0;
 
         for (int i = 0; i < 7; i++) {
-            if (i > A.length()) {
+            if (i > S.length()) {
                 break;
             }
-            String A_substring = A.substring(0, i);
+            String A_substring = S.substring(0, i);
             String calico_substring = calico_lower.substring(6-i);
             if (A_substring.equals(calico_substring)) {
                 max_character_match = i;
             }
         }
-        return calico + A.substring(max_character_match);
+        return max_character_match == 0 ? S : calico + S.substring(max_character_match);
     }
 
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -30,8 +30,8 @@ class Solution {
     public static void main(String[] args) throws IOException {
         int T = Integer.parseInt(in.readLine());
         for (int i = 0; i < T; i++) {
-            String A = in.readLine();
-            out.println(solve(A));
+            String S = in.readLine();
+            out.println(solve(S));
         }
         out.flush();
     }

@@ -1,8 +1,8 @@
-def solve(A: str) -> str:
+def solve(S: str) -> str:
     """
-    Return the CALICOncatenation of A.
+    Return the CALICOncatenation of S.
 
-    A: a string of representing a single word
+    S: a string of representing a single word
     """
 
     '''
@@ -15,16 +15,16 @@ def solve(A: str) -> str:
     matching_count = 0
 
     for i in range(7):
-        if A[0:i] == calico_lower[6-i:]:
+        if S[0:i] == calico_lower[6 - i:]:
             matching_count = i
             
-    return calico + A[matching_count:]
+    return calico + S[matching_count:] if matching_count != 0 else S
 
 def main():
     T = int(input())
     for _ in range(T):
-        A = input()
-        print(solve(A))
+        S = input()
+        print(solve(S))
 
 
 if __name__ == '__main__':

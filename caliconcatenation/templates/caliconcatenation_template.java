@@ -2,12 +2,12 @@ import java.io.*;
 
 class Solution {
     /**
-     * Return the CALICOncatenation of A.
+     * Return the CALICOncatenation of S.
      *
-     * A: a string of representing a single word 
+     * S: a string of representing a single word 
      */
-    static String solve(String A) {
-        return A;
+    static String solve(String S) {
+        return "";
     }
 
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -16,8 +16,8 @@ class Solution {
     public static void main(String[] args) throws IOException {
         int T = Integer.parseInt(in.readLine());
         for (int i = 0; i < T; i++) {
-            String A = in.readLine();
-            out.println(solve(A));
+            String S = in.readLine();
+            out.println(solve(S));
         }
         out.flush();
     }

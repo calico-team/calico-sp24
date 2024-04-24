@@ -7,24 +7,24 @@ string calico = "calico";
 
 string caplico = "CALICO";
 
-string solve(string A) {
+string solve(string S) {
     int i = 0;
     int max = 0;
-    for (int i = 1; i <= min(6, int(A.size())); ++i) {
-        if (calico.substr(6 - i, i) == A.substr(0, i)) {
+    for (int i = 1; i <= min(6, int(S.size())); ++i) {
+        if (calico.substr(6 - i, i) == S.substr(0, i)) {
             max = i;
         }
     }
-    if (max == 0) return A;
-    else return caplico + A.substr(max, int(A.size()) - max);
+    if (max == 0) return S;
+    else return caplico + S.substr(max, int(S.size()) - max);
 }
 
 int main() {
     int T;
     cin >> T;
     for (int i = 0; i < T; i++) {
-        string A;
-        cin >> A;
-        cout << solve(A) << '\n';
+        string S;
+        cin >> S;
+        cout << solve(S) << '\n';
     }
 }
