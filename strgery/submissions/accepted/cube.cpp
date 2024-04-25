@@ -35,6 +35,7 @@ void solve(string S, string P) {
             }
         }
     }
+    printf("IMPOSSIBLE\n");
     return;
 }
 

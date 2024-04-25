@@ -150,19 +150,29 @@ def make_secret_tests():
 
     rng = random.randint
 
-    for i in range(5):
+    for i in range(2):
         make_secret_test([make_random_case(1000, 1000)], "bonus")
         make_secret_test([make_random_case(1000, 800)], "bonus")
         make_secret_test([make_random_case(1000, 400)], "bonus")
-    for i in range(5):
         make_secret_test([make_swap(1000, 1000)], 'bonus_one_char_swapped')
         make_secret_test([make_swap(1000, 800)], 'bonus_one_char_swapped')
         make_secret_test([make_swap(1000, 400)], 'bonus_one_char_swapped')
 
-    for i in range(300, 1400, 200):
-        make_secret_test([make_random_case(1000, 500, rand_str_2_fn(i))], 'bonus_killer')
-        make_secret_test([make_swap(1000, 1000, rand_str_2_fn(i))], 'bonus_killer')
-        make_secret_test([make_swap(1000, 500, rand_str_2_fn(i))], 'bonus_killer')
+    l1 = int(2000);
+    l2 = int(1000);
+    for i in range(int(l2*1.5), l1+l2, int(l2/4)):
+        make_secret_test([make_random_case(l1, l1, rand_str_2_fn(i))], f'bonus_killer_{l1}_{l1}_p{i}')
+        make_secret_test([make_random_case(l1, l2, rand_str_2_fn(i))], f'bonus_killer_{l1}_{l2}_p{i}')
+        make_secret_test([make_swap(l1, l1, rand_str_2_fn(i))], f'bonus_swap_killer_{l1}_{l1}_p{i}')
+        make_secret_test([make_swap(l1, l2, rand_str_2_fn(i))], f'bonus_swap_killer_{l1}_{l2}_p{i}')
+
+    for i in [2, l1-2, l2, 100, l1-100]:
+        s1 = 'a'*l1
+        s_tmp = ['a']*l1
+        s_tmp[i] = 'b'
+        s2 = ''.join(s_tmp)
+        make_secret_test([TestCase(s1, s2)], 'bonus_worst')
+        make_secret_test([TestCase(s2, s1)], 'bonus_worst')
 
     l1 = int(1e5);
     l2 = int(5e4);

@@ -44,14 +44,15 @@ def solve(S: str, P: str) -> str:
     m = len(P)
     for i in range(1, m):
         pos = has_match(S, P[:i])
-        pos2 = has_match(S, P[i:], True)
-        if pos != -1 and pos2 != -1 and pos <= pos2-(m-i):
-            return f"{pos-i} {i} {pos2-(m-i)} {m-i}"
-        pos = has_match(S, P[:i], True)
-        pos2 = has_match(S, P[i:])
-        # print(i, pos, pos2)
-        if pos != -1 and pos2 != -1 and pos2 <= pos-i:
-            return f"{pos-i} {i} {pos2-(m-i)} {m-i}"
+        if pos != -1:
+            pos2 = has_match(S[pos:], P[i:])
+            if pos2 != -1:
+                return f"{pos-i} {i} {pos+pos2-(m-i)} {m-i}"
+        pos = has_match(S, P[i:])
+        if pos != -1:
+            pos2 = has_match(S[pos:], P[:i])
+            if pos2 != -1:
+                return f"{pos+pos2-(i)} {i} {pos-(m-i)} {m-i}"
     return "IMPOSSIBLE"
 
 def main():

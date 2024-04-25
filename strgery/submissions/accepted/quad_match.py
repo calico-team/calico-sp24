@@ -1,6 +1,8 @@
 def solve(A: str, B: str) -> str:
     """
     slow sol
+
+    Actually, fast sol cause find takes O(n)
     """
     n = len(A)
     m = len(B)
