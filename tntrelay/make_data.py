@@ -19,10 +19,14 @@ from calico_lib import make_sample_test, make_secret_test, make_data
 Seed for the random number generator. We need this so randomized tests will
 generate the same thing every time. Seeds can be integers or strings.
 """
-SEED = 'is tnt a relay an iran vs palpatine anime battle reference? nwn'
+SEED = ('If you want a girlfriend, get out of the Bay Area. '
+        'Almost everywhere else on the planet is better for that. '
+        'Im not kidding at all. '
+        'You’ll be shocked by the stark differences in behavior of women in places where women are plentiful versus '
+        'their behavior within artillery distance of San Jose and San Francisco.')
 
-max_N = 100
-max_K = 100
+max_N = 10000
+max_K = 10000
 max_T = 100
 
 
