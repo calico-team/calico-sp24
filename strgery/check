@@ -19,7 +19,7 @@ for i in data/secret/secret_*$test_set*.in; do
   echo "Running $test_path"
   if [[ "$1" == *.py ]] # Python 3
   then
-    time python3 "$1" < "$test_path.in" > "out/$test_name.out"
+    time pypy3 "$1" < "$test_path.in" > "out/$test_name.out"
   elif [[ -x "$1" ]] # cpp
   then
     time ./"$1" < "$test_path.in" > "out/$test_name.out"

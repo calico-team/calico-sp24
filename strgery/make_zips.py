@@ -75,6 +75,7 @@ def is_submission_in_test_set(submission_file_name, test_set_name):
         'quad_match':               ['main', 'bonus'],
         'actual_quad':              ['bonus', 'bonus2'],
         'kmp_empty_intersection':   ['bonus2'],
+        'cube':                     ['main', 'bonus'],
 
         # run_time_error
 
