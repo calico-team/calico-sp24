@@ -3,7 +3,7 @@ using namespace std;
 
 using ll = long long;
 
-const ll MOD = 1000000007;
+const ll MOD = 998244353;
 
 /**
  * Description: modular arithmetic operations.
@@ -91,37 +91,8 @@ vector<T> conv(vector<T> A, vector<T> B) {
     fft(A, 1); A.resize(s); return A;
 }
 
-template<class M, class T>
-vector<M> mulMod(vector<T> const& x, vector<T> const& y) {
-    auto con = [](vector<T> const& v) {
-        vector<M> w(v.size());
-        for (int i = 0; i < int(v.size()); ++i)
-            w[i] = (int)v[i];
-        return w;
-    };
-    return conv(con(x), con(y));
-} // Arbitrary moduli
-
-template <class T>
-vector<T> conv_general(vector<T> const& A, vector<T> const& B) {
-    using m0 = mint<(119<<23)+1, 62>; auto c0 = mulMod<m0>(A, B);
-    using m1 = mint<(5<<25)+1,   62>; auto c1 = mulMod<m1>(A, B);
-    using m2 = mint<(7<<26)+1,   62>; auto c2 = mulMod<m2>(A, B);
-    int n = int(c0.size()); vector<T> res(n);
-    m1 r01 = inv(m1(m0::mod));
-    m2 r02 = inv(m2(m0::mod)), r12 = inv(m2(m1::mod));
-    for (int i = 0; i < n; ++i) {
-        // a - remainder mod m0::mod, b fixes it mod m1::mod
-        int a = c0[i].v, b = ((c1[i] - a) * r01).v,
-            c = (((c2[i] - a) * r02 - b) * r12).v;
-        // c fixes m2:::mod
-        res[i] =(T(c) * m1::mod + b) * m0::mod + a;
-    }
-    return res;
-}
-
 void mult(vector<mi>& A, vector<mi>& B, int HP) {
-    A = conv_general(A, B);
+    A = conv(A, B);
     for (int i = HP + 1; i < int(A.size()); ++i)
         A[HP] += A[i];
     A.resize(HP + 1);
@@ -138,6 +109,15 @@ vector<mi> binpow(vector<mi> A, int HP, ll b) {
     return res;
 }
 
+/**
+ * Return the probability of your Pokemon fainting after being hit with Population Bomb.
+ * If the probability is p/q, return p * q^-1 mod 1000000007
+ * 
+ * H: Your Pokemon's HP
+ * N: Number of times that Population Bomb hits
+ * M: Number of damage rolls
+ * R: List of the M damage rolls
+ */
 int solve(int H, ll N, int M, vector<int> const& R) {
     vector<mi> A(H + 1);
     mi prob = mi(1) / mi(M);

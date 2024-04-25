@@ -21,6 +21,12 @@ generate the same thing every time. Seeds can be integers or strings.
 """
 SEED = 'TODO Change this to something different, long, and arbitrary.'
 
+MAX_H = 2000
+MAX_N = 1_000_000_000_000
+MAX_M = 200_000
+MAX_R = 2000
+MAX_T = 1
+
 
 class TestCase:
     """
@@ -30,10 +36,24 @@ class TestCase:
     TODO Change this to store the relevant information for your problem.
     """
 
+    def __init__(self, H, N, M, R):
+        self.H = H
+        self.N = N
+        self.M = M
+        self.R = R
 
-    def __init__(self, A, B):
-        self.A = A
-        self.B = B
+    def __bool__(self):
+        if not (1 <= self.H <= MAX_H):
+            return False
+        if not (1 <= self.N <= MAX_N):
+            return False
+        if not (1 <= self.M <= MAX_M):
+            return False
+        if len(self.R) != self.M:
+            return False
+        if not all([0 <= r <= MAX_R for r in self.R]):
+            return False
+        return True
 
 
 def make_sample_tests():
@@ -49,17 +69,13 @@ def make_sample_tests():
     identify edge cases.
     """
     main_sample_cases = [
-        TestCase(7, 9),
-        TestCase(420, 69),
-        TestCase(3, 0),
+        [TestCase(20, 2, 3, [10, 11, 11])],
+        [TestCase(20, 2, 5, [9, 8, 7, 4, 0])],
+        [TestCase(20, 2, 2, [10, 0])],
+        [TestCase(1729, 1000, 10, [0, 0, 0, 1, 1, 1, 2, 2, 3, 4])],
     ]
-    make_sample_test(main_sample_cases, 'main')
-    
-    bonus_sample_cases = [
-        TestCase(123456789, 987654321),
-        TestCase(3141592653589793238462643, 3832795028841971693993751),
-    ]
-    make_sample_test(bonus_sample_cases, 'bonus')
+    for tc in main_sample_cases:
+        make_sample_test(tc, 'main')
 
 
 def make_secret_tests():
@@ -73,38 +89,23 @@ def make_secret_tests():
     TODO Write sample tests. Consider creating edge cases and large randomized
     tests.
     """
-    def make_random_case(max_digits):
-        def random_n_digit_number(n):
-            return random.randint(10 ** (n - 1), (10 ** n) - 1) if n != 0 else 0
-        A_digits = random.randint(0, max_digits)
-        B_digits = random.randint(0, max_digits)
-        A, B = random_n_digit_number(A_digits), random_n_digit_number(B_digits)
-        return TestCase(A, B)
-    
-    main_edge_cases = [
-        TestCase(0, 0),
-        TestCase(1, 0),
-        TestCase(0, 1),
-        TestCase(10 ** 9, 0),
-        TestCase(0, 10 ** 9),
-        TestCase(10 ** 9, 10 ** 9),
-    ]
-    make_secret_test(main_edge_cases, 'main_edge')
-    
-    for i in range(5):
-        main_random_cases = [make_random_case(9) for _ in range(100)]
+
+    def make_random_case(H, N, M):
+        R = [random.randint(0, MAX_R) for _ in range(M)]
+        zeros = random.randint(0, M // 10)
+        for i in range(zeros):
+            R[i] = 0
+        R[-1] = random.randint(H, MAX_R)
+        random.shuffle(R)
+        return TestCase(H, N, M, R)
+
+    for i in range(25):
+        main_random_cases = [make_random_case(
+            random.randint(9 * MAX_H // 10, MAX_H),
+            random.randint(9 * MAX_N // 10, MAX_N),
+            random.randint(9 * MAX_M // 10, MAX_M),
+        )]
         make_secret_test(main_random_cases, 'main_random')
-    
-    bonus_edge_cases = [
-        TestCase(10 ** 100, 0),
-        TestCase(0, 10 ** 100),
-        TestCase(10 ** 100, 10 ** 100),
-    ]
-    make_secret_test(bonus_edge_cases, 'bonus_edge')
-    
-    for i in range(5):
-        bonus_random_cases = [make_random_case(100) for _ in range(100)]
-        make_secret_test(bonus_random_cases, 'bonus_random')
 
 
 def make_test_in(cases, file):
@@ -115,9 +116,11 @@ def make_test_in(cases, file):
     TODO Implement this for your problem.
     """
     T = len(cases)
-    print(T, file=file)
+    assert 1 <= T <= MAX_T
     for case in cases:
-        print(f'{case.A} {case.B}', file=file)
+        print(f'{case.H} {case.N} {case.M}', file=file)
+        print(*case.R, file=file)
+        assert case
 
 
 def make_test_out(cases, file):
@@ -130,9 +133,10 @@ def make_test_out(cases, file):
     
     TODO Implement this for your problem by changing the import below.
     """
-    from submissions.accepted.add_arbitrary import solve
+    print("Making new test")
+    from submissions.accepted.maushold_fft import solve
     for case in cases:
-        print(solve(case.A, case.B), file=file)
+        print(solve(case.H, case.N, case.M, case.R), file=file)
 
 
 def main():
