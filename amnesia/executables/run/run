@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Run wrapper-script to be called from 'testcase_run.sh'.
 #
@@ -31,10 +31,23 @@
 TESTIN="$1";  shift
 PROGOUT="$1"; shift
 
-MYDIR=$(dirname $0)
+D=$(head -n 1 "$TESTIN")
+AS=$(tail -n 1 "$TESTIN")
 
-# ls ../dj-bin > "$PROGOUT"
+for ((i = 0; i < ${#AS}; i++)); do
+    if [ "${AS:$i:1}" = "I" ]; then
+    	A="INCREMENT"
+    elif [ "${AS:$i:1}" = "D" ]; then
+    	A="DECREMENT"
+    else
+    	A="MAINTAIN"
+    fi
+    
+    D=$(echo "$D
+$A" | $@)
 
-# Run the program while redirecting its stdin/stdout to 'runjury' via
-# 'runpipe'. Note that "$@" expands to separate, quoted arguments.
-exec ../dj-bin/runpipe ${DEBUG:+-v} "$MYDIR/runjury" "$TESTIN" "$PROGOUT" = "$@"
+    echo "$D" >> $PROGOUT
+    if ! [[ "$D" =~ ^([1-9][0-9]?[0-9]?|1000)$ ]]; then
+        break
+    fi
+done
