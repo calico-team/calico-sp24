@@ -3,10 +3,5 @@
 cd "$(dirname "$0")"
 
 cd executables/run
+zip ../../amnesia_run.zip *
 
-chmod +x build
-chmod +x run
-chmod +x run.py
-chmod +x runjury
-
-zip ../../wtds_run.zip *
