@@ -6,7 +6,7 @@ class Main {
      * 
      * Return a string of digits denoting the initial persistent value.
      */
-    private static String start() { 
+    static String start() { 
         // YOUR CODE HERE
         return "";
     }
@@ -15,12 +15,13 @@ class Main {
      * Phase 2: Observe each brick.
      * 
      * N: a digit string denoting the persistent value from the previous run
-     * color: a letter ('B', 'S', or 'G') denoting the color of the current brick
+     * color: a letter ("B", "S", or "G") denoting the color of the current
+     * brick
      * 
-     * Return a string of digits denoting the updated persistent value for the next
-     * run. This string must have the same length as the given N.
+     * Return a string of digits denoting the updated persistent value for the
+     * next run. This string must have the same length as the given N.
      */
-    private static String observe(String N, String color) {
+    static String observe(String N, String color) {
         // YOUR CODE HERE
         return "";
     }
@@ -30,31 +31,30 @@ class Main {
      * 
      * N: a digit string denoting the persistent value from the previous run
      * 
-     * Return a string of length 3 containing each of the characters 'B', 'S', and
-     * 'G' exactly once, denoting the types from least to most frequent. For
+     * Return a string of length 3 containing each of the characters "B", "S",
+     * and "G" exactly once, denoting the types from least to most frequent. For
      * example, if silver was the least frequent, gold was in the middle, and
      * bronze was the most frequent, then you should output 'SGB'
      */
-    private static String answer(String N) {
+    static String answer(String N) {
         // YOUR CODE HERE
         return "";
     }
 
+    static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+    static PrintWriter out = new PrintWriter(System.out);
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String phase;
-        phase = br.readLine();
-        if (phase.equals("START"))
-            System.out.println(start());
-        else if (phase.equals("OBSERVE")) {
-            String N = br.readLine();
-            String color = br.readLine();
-            System.out.println(observe(N, color));
-        }
-        else {
-            String N = br.readLine();
-            System.out.println(answer(N));
+        String phase = br.readLine();
+        if (phase == "START") {
+            out.println(start());
+        } else if (phase == "OBSERVE") {
+            String N = in.readLine();
+            String color = in.readLine();
+            out.println(observe(N, color));
+        } else {
+            String N = in.readLine();
+            out.println(answer(N));
         }
     }
 }
