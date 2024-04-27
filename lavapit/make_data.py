@@ -32,8 +32,6 @@ class TestCase:
     """
     Represents all the information needed to create the input and output for a
     single test case.
-    
-    TODO Change this to store the relevant information for your problem.
     """
 
     def __init__(self, N, M, G):
@@ -55,6 +53,8 @@ class TestCase:
             for j in range(self.M):
                 if self.G[i][j] not in "LDO":
                     return False
+        if self.G[0][0] == 'L':
+            self.G[0] = 'O' + self.G[0][1:]
         return True
 
 
@@ -65,12 +65,8 @@ def make_sample_tests():
     To create a pair of sample test files, call make_sample_test with a list of
     TestCase as the first parameter and an optional name for second parameter.
     See calico_lib.make_sample_test for more info.
-    
-    TODO Write sample tests. Consider creating cases that help build
-    understanding of the problem, help with debugging, or possibly help
-    identify edge cases.
     """
-    G1 = ["LD", "DO"]
+    G1 = ["OD", "DO"]
     G2 = ["OLD", "ODO", "DLO"]
     G3 = [  # Minecraft case LOL
         "OLOLO",
@@ -102,9 +98,6 @@ def make_secret_tests():
     To create a pair of sample test files, call make_secret_test with a list of
     TestCase as the first parameter and an optional name for second parameter.
     See calico_lib.make_secret_test for more info.
-    
-    TODO Write sample tests. Consider creating edge cases and large randomized
-    tests.
     """
 
     weights = [
@@ -164,8 +157,6 @@ def make_test_in(cases, file):
     """
     Print the input of each test case into the file in the format specified by
     the input format.
-    
-    TODO Implement this for your problem.
     """
     T = len(cases)
     assert 1 <= T <= max_T
