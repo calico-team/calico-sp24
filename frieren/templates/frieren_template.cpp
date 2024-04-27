@@ -3,14 +3,14 @@
 using namespace std;
 
 /**
- * Return the number of times the person saw the Era Meteor Shower if it happens every fifty years.
+ * Return the number of times the given person sees the Era Meteor Shower over the course of their life, it it occurs every fifty years.
  * 
- * B: years ago the person was born
- * L: the person's lifespan
- * E: years until the next Era Meteor Shower occurrs
+ * B: the number of years ago when someone was born
+ * L: the lifespan of that person
+ * E: the number of years until the next Era Meteor Shower
  */
 int solve(int B, int L, int E) {
-    return 0;
+    return -1;
 }
 
 int main() {
