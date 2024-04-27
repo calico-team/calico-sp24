@@ -45,6 +45,7 @@ echo "$N" >> $PROGOUT
 NLEN="${#N}"
 if [[ -z "$N" ]]; then
     echo "WA: Did not receive any output" >> $PROGOUT
+    exit
 fi
 if ! [[ "$N" =~ ^[0-9]+$ ]]; then
     echo "WA: N is not a digit string." >> $PROGOUT
@@ -67,6 +68,7 @@ ${BRICKS:$i:1}" | $@)
     
     if [[ -z "$N" ]]; then
         echo "WA: Did not receive any output" >> $PROGOUT
+        exit
     fi
     if ! [[ "$N" =~ ^[0-9]+$ ]]; then
         echo "WA: N is not a digit string." >> $PROGOUT
