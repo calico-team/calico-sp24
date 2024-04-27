@@ -72,9 +72,11 @@ def is_submission_in_test_set(submission_file_name, test_set_name):
         # accepted
         'frieren_math':    ['main', 'bonus'],
         'frieren_simulation':          ['main'],
+        'frieren_count_halves':          ['main'],
         
         # time_limit_exceeded
         'frieren_simulation_tle':     ['bonus'],
+        'frieren_count_halves_tle':     ['bonus'],
         
         # wrong_answer
         'frieren_simulation_wa':     ['main', 'bonus'],
