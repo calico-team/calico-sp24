@@ -10,7 +10,6 @@ def solve(N: int, K: int, S: str) -> int:
     # YOUR CODE HERE
     return 0
 
-
 def main():
     T = int(input())
     for _ in range(T):
