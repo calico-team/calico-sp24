@@ -8,8 +8,8 @@ class Solution {
      * L: the person's lifespan
      * D: year the Demon King was slain and an Era Meteor Shower occurred.
      */
-    static int solve(int Y, int L, int D) {
-        int born = ((Y - D) % 50 + 50) % 50;
+    static int solve(int B, int L, int E) {
+        int born = ((B - E) % 50 + 50) % 50;
         int death = (born + L) % 50;
         if (death <= born) {
             return (L / 50) + 1;
@@ -24,8 +24,8 @@ class Solution {
         int T = Integer.parseInt(in.readLine());
         for (int i = 0; i < T; i++) {
             String[] temp = in.readLine().split(" ");
-            int Y = Integer.parseInt(temp[0]), L = Integer.parseInt(temp[1]), D = Integer.parseInt(temp[2]);
-            out.println(solve(Y, L, D));
+            int B = Integer.parseInt(temp[0]), L = Integer.parseInt(temp[1]), E = Integer.parseInt(temp[2]);
+            out.println(solve(B, L, E));
         }
         out.flush();
     }

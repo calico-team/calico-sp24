@@ -4,11 +4,11 @@ class Solution {
     /**
      * Return the number of times the person saw the Era Meteor Shower if it happens every fifty years.
      * 
-     * Y: year the person was born
+     * B: year the person was born
      * L: the person's lifespan
-     * D: year the Demon King was slain and an Era Meteor Shower occurred.
+     * E: year the Demon King was slain and an Era Meteor Shower occurred.
      */
-    static int solve(int Y, int L, int D) {
+    static int solve(int B, int L, int E) {
         // YOUR CODE HERE
         return -1;
     }
@@ -20,8 +20,8 @@ class Solution {
         int T = Integer.parseInt(in.readLine());
         for (int i = 0; i < T; i++) {
             String[] temp = in.readLine().split(" ");
-            int Y = Integer.parseInt(temp[0]), L = Integer.parseInt(temp[1]), D = Integer.parseInt(temp[2]);
-            out.println(solve(Y, L, D));
+            int B = Integer.parseInt(temp[0]), L = Integer.parseInt(temp[1]), E = Integer.parseInt(temp[2]);
+            out.println(solve(B, L, E));
         }
         out.flush();
     }

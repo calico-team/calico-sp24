@@ -1,10 +1,10 @@
-def solve(Y: int, L: int, D: int) -> int:
+def solve(B: int, L: int, E: int) -> int:
     """
     Return the number of times the person saw the Era Meteor Shower if it happens every fifty years
 
-    Y: year the person was born
+    B: year the person was born
     L: the person's lifespan
-    D: year the Demon King was slain and an Era Meteor Shower occurred
+    E: year the Demon King was slain and an Era Meteor Shower occurred
     """
     return 0
 
@@ -12,8 +12,8 @@ def solve(Y: int, L: int, D: int) -> int:
 def main():
     T = int(input())
     for _ in range(T):
-        Y, L, D = map(int, input().split())
-        print(solve(Y, L, D))
+        B, L, E = map(int, input().split())
+        print(solve(B, L, E))
 
 if __name__ == '__main__':
     main()
