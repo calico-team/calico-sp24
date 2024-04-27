@@ -1,11 +1,4 @@
 def solve(B: int, L: int, E: int) -> int:
-    """
-    Return the number of times the person saw the Era Meteor Shower if it happens every fifty years
-
-    Y: year the person was born
-    L: the person's lifespan
-    D: year the Demon King was slain and an Era Meteor Shower occurred
-    """
     born = (B - E) % 50
     death = (born + L) % 50
     return L // 50 + (1 if death <= born else 0)

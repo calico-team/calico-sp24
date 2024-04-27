@@ -43,7 +43,12 @@ def make_sample_tests():
     TestCase as the first parameter and an optional name for second parameter.
     See calico_lib.make_sample_test for more info.
     """
-    main_sample_cases = [TestCase(20, 200, 10)] 
+    main_sample_cases = [TestCase(20, 200, 10),
+                         TestCase(100, 20, 5),
+                         TestCase(100, 20, 5),
+                         TestCase(40, 100, 10),
+                         TestCase(15, 20, 30)
+                         ] 
     make_sample_test(main_sample_cases, 'main')
 
 
