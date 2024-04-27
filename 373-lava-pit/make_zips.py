@@ -68,9 +68,9 @@ def is_submission_in_test_set(submission_file_name, test_set_name):
     """
     file_to_sets = {
         # accepted
-        'lavapit':          ['main'],
-        'lava_pit':         ['main'],
-        'lavapit_linear_memory': ['main'],
+        'lavapit_lennox':          ['main'],
+        'lavapit_nacho':         ['main'],
+        'lavapit_linear_memory_nacho': ['main'],
         
         # run_time_error
         
