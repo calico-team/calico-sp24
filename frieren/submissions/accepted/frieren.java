@@ -9,8 +9,12 @@ class Solution {
      * D: year the Demon King was slain and an Era Meteor Shower occurred.
      */
     static int solve(int Y, int L, int D) {
-        // YOUR CODE HERE
-        return -1;
+        int born = ((Y - D) % 50 + 50) % 50;
+        int death = (born + L) % 50;
+        if (death <= born) {
+            return (L / 50) + 1;
+        }
+        return (L / 50);
     }
     
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
