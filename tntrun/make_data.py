@@ -76,6 +76,7 @@ def make_secret_tests():
     See calico_lib.make_secret_test for more info.
     """
 
+    np.random.seed(0)
     def random_cases(n, t):
         def one_case():
             start = ""
