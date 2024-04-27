@@ -10,6 +10,9 @@ desktop.ini
 .vscode
 .idea
 
+# For Lennox
+*.iml
+
 # VisualStudioCode.gitignore
 .vscode/*
 !.vscode/settings.json
