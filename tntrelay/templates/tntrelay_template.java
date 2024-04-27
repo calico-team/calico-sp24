@@ -2,16 +2,14 @@ import java.io.*;
 
 class Solution {
     /**
-     * Return the sum of A and B.
-     * 
-     * A: a non-negative integer
-     * B: another non-negative integer
+    * Return the number of players who can make it across the course. 
+    
+    * N: Denotes the number of blocks in the course
+    * K: Which denotes the maximum jump distance of each player
+    * S: The course represented as a list of strings
      */
-    static int solve(int A, int B, String C) {
+    static int solve(int N, int K, String S) {
         // YOUR CODE HERE
-        System.out.println("A: " + A);
-        System.out.println("B: " + B);
-        System.out.println("C: " + C);
         return -1;
     }
     
@@ -22,10 +20,10 @@ class Solution {
         int T = Integer.parseInt(in.readLine());
         for (int i = 0; i < T; i++) {
             String[] temp = in.readLine().split(" ");
-            int A = Integer.parseInt(temp[0]), B = Integer.parseInt(temp[1]);
+            int N = Integer.parseInt(temp[0]), K = Integer.parseInt(temp[1]);
             String[] temp1 = in.readLine().split(" ");
-            String C = temp1[0];
-            out.println(solve(A, B, C));
+            String S = temp1[0];
+            out.println(solve(N, K, S));
         }
         out.flush();
     }
