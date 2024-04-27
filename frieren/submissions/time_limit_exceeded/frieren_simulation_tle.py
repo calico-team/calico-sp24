@@ -6,7 +6,17 @@ def solve(B: int, L: int, E: int) -> int:
     L: the lifespan of that person
     E: the number of years until the next Era Meteor Shower
     """
-    return -1
+    age_at_first_shower = (E + B) % 50
+    total = 0
+
+    years_to_next_shower = age_at_first_shower
+    for _ in range(L + 1):
+        if years_to_next_shower % 50 == 0:
+            total += 1
+        
+        years_to_next_shower = (years_to_next_shower - 1) % 50
+    
+    return total
 
 
 def main():

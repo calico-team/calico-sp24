@@ -14,7 +14,7 @@ You can also run this file with the -v argument to see debug prints.
 
 import random
 from calico_lib import make_sample_test, make_secret_test, make_data
-from submissions.accepted import frieren
+from submissions.accepted import frieren_math
 
 """
 Seed for the random number generator. We need this so randomized tests will
@@ -29,10 +29,10 @@ class TestCase:
     single test case.
     """
 
-    def __init__(self, Y, L, D):
-        self.Y = Y
+    def __init__(self, B, L, E):
+        self.B = B
         self.L = L
-        self.D = D    
+        self.E = E    
 
 
 def make_sample_tests():
@@ -43,7 +43,12 @@ def make_sample_tests():
     TestCase as the first parameter and an optional name for second parameter.
     See calico_lib.make_sample_test for more info.
     """
-    main_sample_cases = [TestCase(20, 200, 10)] 
+    main_sample_cases = [TestCase(20, 200, 10),
+                         TestCase(80, 170, 40),
+                         TestCase(100, 20, 5),
+                         TestCase(40, 100, 10),
+                         TestCase(15, 20, 30)
+                         ] 
     make_sample_test(main_sample_cases, 'main')
 
 
@@ -58,8 +63,14 @@ def make_secret_tests():
     for i in range(10):
         cases = []
         for j in range(100):
-            cases.append(TestCase(random.randint(1, 1000), random.randint(100, 1000), random.randint(1, 1000)))
+            cases.append(TestCase(random.randint(1, 2000), random.randint(20, 2000), random.randint(0, 49)))
         make_secret_test(cases, 'main_random_0' + str(i))
+    
+    for i in range(10):
+        cases = []
+        for j in range(100):
+            cases.append(TestCase(random.randint(1, 10 ** 8), random.randint(20, 10 ** 8), random.randint(0, 49)))
+        make_secret_test(cases, 'bonus_random_0' + str(i))
 
 
 def make_test_in(cases, file):
@@ -68,9 +79,14 @@ def make_test_in(cases, file):
     the input format.
     """
     T = len(cases)
+    assert 0 <= T <= 100
     print(T, file=file)
     for case in cases:
-        print(f'{case.Y} {case.L} {case.D}', file=file)
+        B, L, E = case.B, case.L, case.E
+        assert 1 <= B <= 10 ** 8
+        assert 20 <= L <= 10 ** 8
+        assert 0 <= E <= 49
+        print(f'{case.B} {case.L} {case.E}', file=file)
 
 
 def make_test_out(cases, file):
@@ -82,7 +98,7 @@ def make_test_out(cases, file):
     problem and print the output of that.
     """
     for case in cases:
-        print(frieren.solve(case.Y, case.L, case.D), file=file)
+        print(frieren_math.solve(case.B, case.L, case.E), file=file)
 
 
 def main():

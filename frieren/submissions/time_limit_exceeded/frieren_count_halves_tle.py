@@ -6,7 +6,18 @@ def solve(B: int, L: int, E: int) -> int:
     L: the lifespan of that person
     E: the number of years until the next Era Meteor Shower
     """
-    return -1
+    total = 0
+
+    relative_born_year = -1 * B
+
+    for relative_year in range(E - 50, relative_born_year - 1, -50):
+        if relative_born_year <= relative_year <= relative_born_year + L:
+            total += 1
+    
+    for _ in range(E, relative_born_year + L + 1, 50):
+        total += 1
+    
+    return total
 
 
 def main():

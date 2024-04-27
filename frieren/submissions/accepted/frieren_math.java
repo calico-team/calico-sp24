@@ -1,16 +1,15 @@
 import java.io.*;
 
 class Solution {
-    /**
-     * Return the number of times the given person sees the Era Meteor Shower over the course of their life, it it occurs every fifty years.
- * 
-     * B: the number of years ago when someone was born
-     * L: the lifespan of that person
-     * E: the number of years until the next Era Meteor Shower
-     */
     static int solve(int B, int L, int E) {
-        // YOUR CODE HERE
-        return -1;
+        int age_at_first_shower = (E + B) % 50;
+        
+        if (age_at_first_shower > L) {
+            return 0;
+        }
+        
+        int years_from_first_shower = L - age_at_first_shower;
+        return years_from_first_shower / 50 + 1;
     }
     
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
