@@ -9,6 +9,7 @@ using namespace std;
  */
 string start() {
     // YOUR CODE HERE
+    return "";
 }
 
 /**
@@ -22,6 +23,7 @@ string start() {
  */
 string observe(string N, string color) {
     // YOUR CODE HERE
+    return "";
 }
 
 /**
@@ -36,6 +38,7 @@ string observe(string N, string color) {
  */
 string answer(string N) {
     // YOUR CODE HERE
+    return "";
 }
 
 int main() {
