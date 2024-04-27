@@ -46,9 +46,9 @@ class Main {
 
     public static void main(String[] args) throws IOException {
         String phase = br.readLine();
-        if (phase == "START") {
+        if (phase.equals("START")) {
             out.println(start());
-        } else if (phase == "OBSERVE") {
+        } else if (phase.equals("OBSERVE")) {
             String N = in.readLine();
             String color = in.readLine();
             out.println(observe(N, color));
