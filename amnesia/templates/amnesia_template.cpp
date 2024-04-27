@@ -12,7 +12,7 @@ string start() {
 }
 
 
-int observer(string N, string color) {
+string observe(string N, string color) {
     /*
     Phase 2: Observe each brick.
     
@@ -44,9 +44,9 @@ string answer(string N) {
 int main() {
     string phase;
     cin >> phase;
-    if (phase == 'START')
+    if (phase == "START")
         cout << start() << endl;
-    else if (phase == 'OBSERVE') {
+    else if (phase == "OBSERVE") {
         string N, color;
         cin >> N >> color;
         cout << observe(N, color) << endl;

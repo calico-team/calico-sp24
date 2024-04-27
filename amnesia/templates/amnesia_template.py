@@ -7,7 +7,7 @@ def start() -> str:
     # YOUR CODE HERE
 
 
-def observe(N: str, color: str) -> int:
+def observe(N: str, color: str) -> str:
     """
     Phase 2: Observe each brick.
     
