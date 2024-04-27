@@ -4,13 +4,17 @@ class Solution {
     /**
      * Return the number of times the person saw the Era Meteor Shower if it happens every fifty years.
      * 
-     * B: year the person was born
+     * Y: year the person was born
      * L: the person's lifespan
-     * E: year the Demon King was slain and an Era Meteor Shower occurred.
+     * D: year the Demon King was slain and an Era Meteor Shower occurred.
      */
     static int solve(int B, int L, int E) {
-        // YOUR CODE HERE
-        return -1;
+        int born = ((B - E) % 50 + 50) % 50;
+        int death = (born + L) % 50;
+        if (death <= born) {
+            return (L / 50) + 1;
+        }
+        return (L / 50);
     }
     
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

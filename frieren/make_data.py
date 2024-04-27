@@ -14,40 +14,25 @@ You can also run this file with the -v argument to see debug prints.
 
 import random
 from calico_lib import make_sample_test, make_secret_test, make_data
+from submissions.accepted import frieren
 
 """
 Seed for the random number generator. We need this so randomized tests will
 generate the same thing every time. Seeds can be integers or strings.
 """
-SEED = 'TODO Change this to something different, long, and arbitrary.'
-
-max_T = 100
-max_Y = 1_000_000_000
-max_L = 1_000_000_000
-max_D = 1_000_000_000
+SEED = 'meteors! scary!'
 
 
 class TestCase:
     """
     Represents all the information needed to create the input and output for a
     single test case.
-    
-    TODO Change this to store the relevant information for your problem.
     """
 
     def __init__(self, Y, L, D):
         self.Y = Y
         self.L = L
-        self.D = D
-
-    def __bool__(self):
-        if not (1 <= self.Y <= max_Y):
-            return False
-        if not (1 <= self.L <= max_L):
-            return False
-        if not (1 <= self.D <= max_D):
-            return False
-        return True
+        self.D = D    
 
 
 def make_sample_tests():
@@ -57,16 +42,8 @@ def make_sample_tests():
     To create a pair of sample test files, call make_sample_test with a list of
     TestCase as the first parameter and an optional name for second parameter.
     See calico_lib.make_sample_test for more info.
-    
-    TODO Write sample tests. Consider creating cases that help build
-    understanding of the problem, help with debugging, or possibly help
-    identify edge cases.
     """
-    main_sample_cases = [
-        TestCase(1000, 2000, 1051),
-        TestCase(1729, 76, 1752),
-        TestCase(1912, 41, 1945),
-    ]
+    main_sample_cases = [TestCase(20, 200, 10)] 
     make_sample_test(main_sample_cases, 'main')
 
 
@@ -77,34 +54,23 @@ def make_secret_tests():
     To create a pair of sample test files, call make_secret_test with a list of
     TestCase as the first parameter and an optional name for second parameter.
     See calico_lib.make_secret_test for more info.
-    
-    TODO Write sample tests. Consider creating edge cases and large randomized
-    tests.
     """
+    for i in range(10):
+        cases = []
+        for j in range(100):
+            cases.append(TestCase(random.randint(1, 1000), random.randint(100, 1000), random.randint(1, 1000)))
+        make_secret_test(cases, 'main_random_0' + str(i))
 
-    for i in range(7):
-        batch = [
-            TestCase(
-                random.randint(1, max_Y),
-                random.randint(1, max_L),
-                random.randint(1, max_D)
-            ) for _ in range(max_T)
-        ]
-        make_secret_test(batch, 'main_random')
 
 def make_test_in(cases, file):
     """
     Print the input of each test case into the file in the format specified by
     the input format.
-    
-    TODO Implement this for your problem.
     """
     T = len(cases)
     print(T, file=file)
-    assert 1 <= T <= max_T
     for case in cases:
         print(f'{case.Y} {case.L} {case.D}', file=file)
-        assert case
 
 
 def make_test_out(cases, file):
@@ -114,12 +80,9 @@ def make_test_out(cases, file):
     
     The easiest way to do this is to import a python reference solution to the
     problem and print the output of that.
-    
-    TODO Implement this for your problem by changing the import below.
     """
-    from submissions.accepted.frieren import solve
     for case in cases:
-        print(solve(case.Y, case.L, case.D), file=file)
+        print(frieren.solve(case.Y, case.L, case.D), file=file)
 
 
 def main():
