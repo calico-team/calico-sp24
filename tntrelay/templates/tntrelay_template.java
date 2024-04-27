@@ -2,11 +2,10 @@ import java.io.*;
 
 class Solution {
     /**
-    * Return the number of players who can make it across the course. 
-    
-    * N: Denotes the number of blocks in the course
-    * K: Which denotes the maximum jump distance of each player
-    * S: The course represented as a list of strings
+     * Return the sum of A and B.
+     * 
+     * A: a non-negative integer
+     * B: another non-negative integer
      */
     static int solve(int N, int K, String S) {
         // YOUR CODE HERE
