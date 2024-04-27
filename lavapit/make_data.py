@@ -187,7 +187,7 @@ def make_test_out(cases, file):
     
     TODO Implement this for your problem by changing the import below.
     """
-    from submissions.accepted.lavapit_linear_memory import solve
+    from submissions.accepted.lavapit_linear_memory_nacho import solve
     for case in cases:
         print(solve(case.N, case.M, case.G), file=file)
 
