@@ -162,10 +162,10 @@ def make_test_in(cases, file):
     assert 1 <= T <= max_T
     print(T, file=file)
     for case in cases:
+        assert case.is_correct()
         print(f'{case.N} {case.M}', file=file)
         for i in range(case.N):
             print(case.G[i], file=file)
-        assert case.is_correct()
 
 
 def make_test_out(cases, file):
@@ -175,8 +175,6 @@ def make_test_out(cases, file):
     
     The easiest way to do this is to import a python reference solution to the
     problem and print the output of that.
-    
-    TODO Implement this for your problem by changing the import below.
     """
     from submissions.accepted.lavapit_linear_memory_nacho import solve
     for case in cases:
