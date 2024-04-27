@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# Run wrapper-script to be called from 'testcase_run.sh'.
+#
+# This script is meant to simplify writing interactive problems where
+# the contestants' solution bi-directionally communicates with a jury
+# program, e.g. while playing a two player game.
+#
+# Usage: $0 <testin> <progout> <program>...
+#
+# <testin>    File containing test-input.
+# <progout>   File where to write solution output.
+# <program>   Command and options of the program to be run.
+#
+# A jury-written program called 'runjury' should be available; this
+# program will normally be copied from 'runjury_<specialrun>' by
+# testcase_run.sh. This program should communicate with the
+# contestants' program to provide input and read output via
+# stdin/stdout. This wrapper script handles the setup of
+# bi-directional pipes. The jury program should accept the following
+# calling syntax:
+#
+#    runjury <testin> <progout>
+#
+# The jury program should exit with exitcode zero unless an unexpected
+# failure occurred (malformed contestant's program output should be
+# handled by the jury program), and write output to <program.out> such
+# that that data can later be used to verify correctness of the
+# contestants' solution.
+
+TESTIN="$1";  shift
+PROGOUT="$1"; shift
+
+mapfile -t lines < $TESTIN
+MAXNLEN="${lines[0]}"
+BRICKS="${lines[1]}"
+
+# Phase 1
+echo "START" >> $PROGOUT
+
+N=$(echo "START" | $@)
+
+echo "$N" >> $PROGOUT
+
+NLEN="${#N}"
+if [[ -z "$N" ]]; then
+    echo "WA: Did not receive any output" >> $PROGOUT
+    exit
+fi
+if ! [[ "$N" =~ ^[0-9]+$ ]]; then
+    echo "WA: N is not a digit string." >> $PROGOUT
+    exit
+fi
+if [[ $NLEN -gt $MAXNLEN ]]; then
+    echo "WA: N exceeds maximum acceptable length for this test set." >> $PROGOUT
+    exit
+fi
+
+# Phase 2
+for ((i = 0; i < ${#BRICKS}; i++)); do
+    echo "OBSERVE $N ${BRICKS:$i:1}" >> $PROGOUT
+    
+    N=$(echo "OBSERVE
+$N
+${BRICKS:$i:1}" | $@)
+
+    echo "$N" >> $PROGOUT
+    
+    if [[ -z "$N" ]]; then
+        echo "WA: Did not receive any output" >> $PROGOUT
+        exit
+    fi
+    if ! [[ "$N" =~ ^[0-9]+$ ]]; then
+        echo "WA: N is not a digit string." >> $PROGOUT
+        exit
+    fi
+    if ! [[ ${#N} -eq $NLEN ]]; then
+        echo "WA: N length changed during interaction." >> $PROGOUT
+        exit
+    fi
+done
+
+# Phase 3
+echo "ANSWER $N" >> $PROGOUT
+
+ANSWER=$(echo "ANSWER
+$N" | $@)
+
+echo "$ANSWER" >> $PROGOUT
