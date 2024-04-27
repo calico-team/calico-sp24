@@ -2,9 +2,10 @@ def solve(S: str) -> str:
     """
     Return the CALICOncatenation of S.
 
-    S: a string of representing a single word
+    S: a string
     """
     return ''
+
 
 def main():
     T = int(input())

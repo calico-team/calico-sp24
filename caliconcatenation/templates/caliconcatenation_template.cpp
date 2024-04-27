@@ -1,12 +1,12 @@
 #include <iostream>
+
 using namespace std;
 
 /**
  * Return the CALICOncatenation of S.
  *
- * S: a string of representing a single word
+ * S: a string
  */
-
 string solve(string S) {
     // YOUR CODE HERE
     return "";

@@ -4,7 +4,7 @@ class Solution {
     /**
      * Return the CALICOncatenation of S.
      *
-     * S: a string of representing a single word 
+     * S: a string
      */
     static String solve(String S) {
         return "";
@@ -22,4 +22,3 @@ class Solution {
         out.flush();
     }
 }
-
