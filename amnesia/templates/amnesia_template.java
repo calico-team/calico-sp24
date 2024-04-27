@@ -45,9 +45,9 @@ class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String phase;
         phase = br.readLine();
-        if (phase == "START")
+        if (phase.equals("START"))
             System.out.println(start());
-        else if (phase == "OBSERVE") {
+        else if (phase.equals("OBSERVE")) {
             String N = br.readLine();
             String color = br.readLine();
             System.out.println(observe(N, color));
