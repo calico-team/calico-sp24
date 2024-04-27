@@ -31,23 +31,57 @@
 TESTIN="$1";  shift
 PROGOUT="$1"; shift
 
-D=$(head -n 1 "$TESTIN")
-AS=$(tail -n 1 "$TESTIN")
+mapfile -t lines < $TESTIN
+MAXNLEN="${lines[0]}"
+BRICKS="${lines[1]}"
 
-for ((i = 0; i < ${#AS}; i++)); do
-    if [ "${AS:$i:1}" = "I" ]; then
-    	A="INCREMENT"
-    elif [ "${AS:$i:1}" = "D" ]; then
-    	A="DECREMENT"
-    else
-    	A="MAINTAIN"
-    fi
+# Phase 1
+echo "START" >> $PROGOUT
+
+N=$(echo "START" | $@)
+
+echo "$N" >> $PROGOUT
+
+NLEN="${#N}"
+if [[ -z "$N" ]]; then
+    echo "WA: Did not receive any output" >> $PROGOUT
+fi
+if ! [[ "$N" =~ ^[0-9]+$ ]]; then
+    echo "WA: N is not a digit string." >> $PROGOUT
+    exit
+fi
+if [[ $NLEN -gt $MAXNLEN ]]; then
+    echo "WA: N exceeds maximum acceptable length for this test set." >> $PROGOUT
+    exit
+fi
+
+# Phase 2
+for ((i = 0; i < ${#BRICKS}; i++)); do
+    echo "OBSERVE $N ${BRICKS:$i:1}" >> $PROGOUT
     
-    D=$(echo "$D
-$A" | $@)
+    N=$(echo "OBSERVE
+$N
+${BRICKS:$i:1}" | $@)
 
-    echo "$D" >> $PROGOUT
-    if ! [[ "$D" =~ ^([1-9][0-9]?[0-9]?|1000)$ ]]; then
-        break
+    echo "$N" >> $PROGOUT
+    
+    if [[ -z "$N" ]]; then
+        echo "WA: Did not receive any output" >> $PROGOUT
+    fi
+    if ! [[ "$N" =~ ^[0-9]+$ ]]; then
+        echo "WA: N is not a digit string." >> $PROGOUT
+        exit
+    fi
+    if ! [[ ${#N} -eq $NLEN ]]; then
+        echo "WA: N length changed during interaction." >> $PROGOUT
+        exit
     fi
 done
+
+# Phase 3
+echo "ANSWER $N" >> $PROGOUT
+
+ANSWER=$(echo "ANSWER
+$N" | $@)
+
+echo "$ANSWER" >> $PROGOUT

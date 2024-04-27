@@ -1,25 +1,22 @@
 import random
 
-COUNTER_SIZE = 2
-COUNTERS = 3
-COUNT_PROB = 0.35
-
 def start() -> str:
-    return '0' * COUNTER_SIZE * COUNTERS
+    return '0' * 2 * 3
 
 
-def observe(N: str, color: str) -> int:
-    counters = {'B': N[0:3], 'S': N[3:6], 'G': N[6:9]}
+def observe(N: str, color: str) -> str:
+    counters = {'B': N[0:2], 'S': N[2:4], 'G': N[4:6]}
     
-    counters[color] = str(min(int(counters[color]) + 1, 99))
-    while len(counters[color]) < COUNTER_SIZE:
-        counters[color] = '0' + counters[color]
+    if random.random() < 0.35:
+        counters[color] = str(min(int(counters[color]) + 1, 99))
+        while len(counters[color]) < 2:
+            counters[color] = '0' + counters[color]
     
     return counters['B'] + counters['S'] + counters['G']
 
 
 def answer(N: str) -> str:
-    counters = {'B': int(N[0:3]), 'S': int(N[3:6]), 'G': int(N[6:9])}
+    counters = {'B': int(N[0:2]), 'S': int(N[2:4]), 'G': int(N[4:6])}
     return ''.join(sorted(counters, key=counters.get))
 
 

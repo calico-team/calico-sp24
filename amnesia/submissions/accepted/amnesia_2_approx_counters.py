@@ -1,26 +1,22 @@
 import random
 
-COUNTER_SIZE = 2
-COUNTERS = 2
-COUNT_PROB = 0.6
-
 def start() -> str:
-    return '0' * COUNTER_SIZE * COUNTERS
+    return '0' * 2 * 2
 
 
-def observe(N: str, color: str) -> int:
-    counters = {'B': N[0:3], 'S': N[3:6]}
+def observe(N: str, color: str) -> str:
+    counters = {'B': N[0:2], 'S': N[2:4]}
     
-    if color != 'G' and random.random() < COUNT_PROB:
+    if color != 'G' and random.random() < 0.6:
         counters[color] = str(min(int(counters[color]) + 1, 99))
-        while len(counters[color]) < COUNTER_SIZE:
+        while len(counters[color]) < 2:
             counters[color] = '0' + counters[color]
     
     return counters['B'] + counters['S']
 
 
 def answer(N: str) -> str:
-    counters = {'B': int(N[0:3]), 'S': int(N[3:6])}
+    counters = {'B': int(N[0:2]), 'S': int(N[2:4])}
     
     if not (counters['B'] < 50 or counters['S'] < 50):
         counters['G'] = 25

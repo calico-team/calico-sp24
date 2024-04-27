@@ -5,7 +5,7 @@ def start() -> str:
     return '0' * COUNTER_SIZE * COUNTERS
 
 
-def observe(N: str, color: str) -> int:
+def observe(N: str, color: str) -> str:
     counters = {'B': N[0:3], 'S': N[3:6], 'G': N[6:9]}
     
     counters[color] = str(int(counters[color]) + 1)

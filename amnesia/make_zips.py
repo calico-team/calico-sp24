@@ -24,14 +24,14 @@ The short name of the problem.
 Names must only use lowercase letters and digits and should be contest-unique.
 Names should be short if possible.
 """
-PROBLEM_NAME = 'wtds'
+PROBLEM_NAME = 'amnesia'
 
 """
 The time limit in seconds.
 
 Typically this is 1 but feel free to adjust as necessary for your problem.
 """
-TIME_LIMIT = 1
+TIME_LIMIT = 0.1
 
 """
 A list with strings containing the names of every test set.
@@ -39,7 +39,7 @@ A list with strings containing the names of every test set.
 The script will generate a zip for each test set. The filter functions below
 should only return names from this list.
 """
-TEST_SET_NAMES = ['main']
+TEST_SET_NAMES = ['main', 'bonus_1', 'bonus_2']
 
 
 def is_data_in_test_set(data_file_name, test_set_name):
@@ -47,7 +47,7 @@ def is_data_in_test_set(data_file_name, test_set_name):
     Return True if the data (test .in or .ans) file named data_file_name
     should be added to the test set named test_set_name.
     """
-    return 'main' in data_file_name
+    return test_set_name in data_file_name
 
 
 def is_submission_in_test_set(submission_file_name, test_set_name):
@@ -55,7 +55,25 @@ def is_submission_in_test_set(submission_file_name, test_set_name):
     Return True if the submission file named submission_file_name should be
     added to the test set named test_set_name.
     """
-    return 'wtds' in submission_file_name
+    file_to_sets = {
+        # accepted
+        'amnesia_3_counters':           ['main'],
+        'amnesia_3_approx_counters':    ['main', 'bonus_1'],
+        'amnesia_2_counters':           ['main', 'bonus_1'],
+        'amnesia_2_approx_counters':    ['main', 'bonus_1', 'bonus_2'],
+        
+        # bad
+        'amnesia_compare_debug':        ['main', 'bonus_1', 'bonus_2'],
+    }
+    
+    # we only care about actual code files
+    if submission_file_name.split('.')[-1] not in ['cpp', 'java', 'py']:
+        return False
+    
+    # trim file extensions
+    submission_file_name = submission_file_name.split('.')[0]
+    
+    return test_set_name in file_to_sets[submission_file_name]
 
 
 def main():
