@@ -62,9 +62,9 @@ def make_sample_tests():
         TestCase("computers"),
         TestCase("licorice"),
         TestCase("comprehensible"),
-        TestCase("cosmopolitan"),
+        TestCase("optimize"),
         TestCase("calico"),
-        TestCase("corvettes"),
+        TestCase("iconoclast"),
         TestCase("bigben"),
     ]
     make_sample_test(main_sample_cases, 'main')
