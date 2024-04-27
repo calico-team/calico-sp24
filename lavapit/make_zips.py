@@ -71,6 +71,7 @@ def is_submission_in_test_set(submission_file_name, test_set_name):
         'lavapit_lennox':          ['main'],
         'lavapit_nacho':         ['main'],
         'lavapit_linear_memory_nacho': ['main'],
+        'lavapit_slow':         ['main'],
         
         # run_time_error
         
