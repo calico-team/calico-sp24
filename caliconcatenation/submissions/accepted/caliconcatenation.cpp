@@ -4,7 +4,6 @@
 using namespace std;
 
 string calico = "calico";
-
 string caplico = "CALICO";
 
 string solve(string S) {
@@ -15,8 +14,11 @@ string solve(string S) {
             max = i;
         }
     }
-    if (max == 0) return S;
-    else return caplico + S.substr(max, int(S.size()) - max);
+    if (max == 0) {
+        return S;
+    } else {
+        return caplico + S.substr(max, int(S.size()) - max);
+    }
 }
 
 int main() {

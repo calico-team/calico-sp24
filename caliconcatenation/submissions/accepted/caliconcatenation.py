@@ -1,15 +1,4 @@
-def solve(S: str) -> str:
-    """
-    Return the CALICOncatenation of S.
-
-    S: a string of representing a single word
-    """
-
-    '''
-    Greedily search through the first 6 characters of the word to find the 
-    first non-matching character.
-    '''
-    
+def solve(S: str) -> str:    
     calico = "CALICO"
     calico_lower = "calico"
     matching_count = 0

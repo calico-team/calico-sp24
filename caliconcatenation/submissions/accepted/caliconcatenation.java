@@ -1,11 +1,6 @@
 import java.io.*;
 
 class Solution {
-    /**
-     * Return the CALICOncatenation of S.
-     *
-     * S: a string of representing a single word 
-     */
     static String solve(String S) {
         String calico = "CALICO";
         String calico_lower = "calico";
@@ -16,7 +11,7 @@ class Solution {
                 break;
             }
             String A_substring = S.substring(0, i);
-            String calico_substring = calico_lower.substring(6-i);
+            String calico_substring = calico_lower.substring(6 - i);
             if (A_substring.equals(calico_substring)) {
                 max_character_match = i;
             }
@@ -36,4 +31,3 @@ class Solution {
         out.flush();
     }
 }
-
