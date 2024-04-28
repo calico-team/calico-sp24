@@ -22,7 +22,7 @@ class Solution {
         for (int i = 0; i < T; i++) {
             String S = in.readLine();
             String P = in.readLine();
-            out.println(solve(S, P));
+            solve(S, P);
         }
         out.flush();
     }
