@@ -1,4 +1,3 @@
-// TODO!!!!
 #include <iostream>
 using namespace std;
 
@@ -8,6 +7,8 @@ using namespace std;
  *
  * S: The string you must find the substrings s1 and s2 in.
  * P: The string you want to make by concatenating.
+ *
+ * Print your answer instead of returning them.
  */
 
 void solve(string S, string P) {

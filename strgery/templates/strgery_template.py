@@ -1,19 +1,21 @@
-# TODO!!!!
-# TODO: change the variable name to fit problem
-def solve(A: str, B: str):
+def solve(S: str, P: str):
     """
-    =========== TODO Description ========
+    Print the start positions and lengths of two substrings of S, s1 and s2,
+    such that concatenating s1 and s2 yields to P.
 
-    A: TODO describe io
+    S: The string you must find the substrings s1 and s2 in.
+    P: The string you want to make by concatenating.
+
+    Print your answer instead of returning them.
     """
-    return 0
+    return
 
 def main():
     T = int(input())
     for _ in range(T):
         S = input()
-        T = input()
-        solve(S, T)
+        P = input()
+        solve(S, P)
 
 
 if __name__ == '__main__':

@@ -1,4 +1,3 @@
-// TODO!!!!
 import java.io.*;
 
 class Solution {
@@ -6,11 +5,15 @@ class Solution {
     static PrintWriter out = new PrintWriter(System.out);
 
     /**
-     * Return the CALICOncatenation of A.
+     * Print the start positions and lengths of two substrings of S, s1 and s2,
+     * such that concatenating s1 and s2 yields to P.
      *
-     * A: a string of representing a single word 
+     * S: The string you must find the substrings s1 and s2 in.
+     * P: The string you want to make by concatenating.
+     *
+     * Print your answer instead of returning them.
      */
-    static void solve(String S, String T) {
+    static void solve(String S, String P) {
         return;
     }
 
@@ -19,7 +22,7 @@ class Solution {
         for (int i = 0; i < T; i++) {
             String S = in.readLine();
             String P = in.readLine();
-            out.println(solve(S, T));
+            out.println(solve(S, P));
         }
         out.flush();
     }
