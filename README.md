@@ -18,6 +18,10 @@ You can explore this repository using GitHub in your browser or download an [arc
 ## Repository Structure
 Subdirectories are named after problem IDs and contain their solutions, editorials, tests, templates, and problem statements.
 
+### Executables
+
+These are custom scripts used to change the behavior of the judge for nonstandard problems. The `run` script changes how submissions are run, and is modified for interactive problems. The `compare` script changes how outputs are checked for correctness, and is modified for problems with multiple correct answers.
+
 ### Solutions
 Solutions are programs written by us that implement different approaches of varying efficiency in multiple programming languages to solve each problem. As a result, some solutions may pass more test sets than others. Solution files are named `[problem name]_[solution name].[extension]`, where `[solution_name]` is a keyword that describes the solution, and `[extension]` is the extension used by that language's source files (for example, `.cpp`, `.java`, or `.py`).
 
@@ -49,7 +53,7 @@ Problem statements describe the problem contestants need to solve, as well as th
 ├── [problem name]
 │   ├── [problem name].pdf
 │   ├── [problem name]-editorial.pdf
-│   ├── solutions
+│   ├── submissions
 │   │   ├── [problem name]_[solution name].[extension]
 │   │   └── ...
 │   ├── templates
