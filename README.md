@@ -13,7 +13,7 @@ This repository contains all contest materials for CALICO Spring '24, including 
 
 You can explore this repository using GitHub in your browser or download an [archive of all the files](https://github.com/calico-team/calico-sp24/archive/refs/heads/main.zip). If you'd like to see what files participants were given during the contest, you can download the [contest.zip](https://calico.berkeley.edu/files/calico-sp24/contest.zip)!
 
-[NOT YET LIVE] Although the contest is over, you can still submit solutions to the [judge platform](https://calicojudge.com) under the `calico-sp24-archive` contest. Sign in or register if you don't have an account already. Then change the selected contest to `calico-sp24-archive` on the right side of the navigation bar. [NOT YET LIVE]
+[NOT YET LIVE] Although the contest is over, you will be able to submit solutions to the [judge platform](https://calicojudge.com) under the `calico-sp24-archive` contest when it is brought online. Sign in or register if you don't have an account already. Then change the selected contest to `calico-sp24-archive` on the right side of the navigation bar. [NOT YET LIVE]
 
 ## Repository Structure
 Subdirectories are named after problem IDs and contain their solutions, editorials, tests, templates, and problem statements.
@@ -55,7 +55,7 @@ Problem statements describe the problem contestants need to solve, as well as th
 │   ├── templates
 │   │   ├── [problem name]_template.[extension]
 │   │   └── ...
-│   └── tests
+│   └── data
 │       ├── sample
 │       │   ├── [test name].in
 │       │   ├── [test name].ans
